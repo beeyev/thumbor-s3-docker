@@ -1,0 +1,97 @@
+# docker build -t thumbor --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.0/Dockerfile-slim-debian . && docker run --rm -it thumbor
+FROM python:3.7-slim-buster
+
+LABEL org.opencontainers.image.source https://github.com/beeyev/thumbor-s3-docker
+
+ENV TERM="xterm-256color" \
+LANGUAGE="en_US.UTF-8" \
+LANG="en_US.UTF-8" \
+LC_TIME="en_GB.UTF-8" \
+DEBIAN_FRONTEND="noninteractive" \
+DEBCONF_NONINTERACTIVE_SEEN="true"
+# Enable jpegtran optimizer https://thumbor.readthedocs.io/en/latest/jpegtran.html#jpegtran
+ENV OPTIMIZERS="['thumbor.optimizers.jpegtran']"
+
+WORKDIR /app
+
+
+RUN set -eux \
+    # Package Installation process
+    && apt-get update && apt-get install --no-install-recommends -yq \
+        nano \
+        figlet \
+        curl \
+        iputils-ping \
+        # jpegtran (libjpeg-progs) is a Thumbor requirement for optimizing JPEG images
+        libjpeg-progs
+
+
+# thumbor requirements:
+ARG BUILD_DEPENDENCIES="\
+    g++ \
+    # pycurl requirements
+    libcurl4-openssl-dev libssl-dev \
+    "
+RUN set -eux \
+    && apt-get install --no-install-recommends -yq ${BUILD_DEPENDENCIES}
+
+RUN set -eux \
+    && pip install --quiet --no-cache-dir --upgrade pip \
+    && pip install --quiet --no-cache-dir \
+        # Jinja2 and envtpl are required to work with environtment variables
+        Jinja2==3.0.* envtpl==0.6.* \
+        # pycurl is required for thumbor
+        pycurl==7.45.* thumbor==7.0.* thumbor-aws==0.4.* tc_prometheus==0.1.* \
+    && thumbor --version && envtpl --help
+
+##
+## Optional extensions
+##
+## `gifsicle` is a Thumbor requirement for better processing of GIF images
+RUN apt-get install --no-install-recommends -yq gifsicle
+
+## `ffmpeg` is used by Thumbor for rendering animated images as GIFV
+RUN apt-get install --no-install-recommends -yq ffmpeg
+
+## cairosvg is for reading SVG files.
+RUN pip install --quiet --no-cache-dir cairosvg==2.5.*
+
+# py3exiv2 is required for working with EXIF metadata
+RUN apt-get install --no-install-recommends -yq exiv2 libboost-python-dev \
+    libexiv2-dev \
+    && pip install --quiet --no-cache-dir py3exiv2==0.9.* \
+    && apt-get autoremove --yes libexiv2-dev
+
+# Cleanup
+RUN set -eux \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get autoremove --yes ${BUILD_DEPENDENCIES}
+
+#These params meant to be set by CI
+ARG BUILD_DATE
+ENV BUILD_DATE=${BUILD_DATE}
+ARG BUILD_INFO
+ENV BUILD_INFO=${BUILD_INFO}
+
+ENV LOG_LEVEL="warning"
+ENV PORT="8888"
+ENV NUM_PROCESSES=0
+
+COPY ./docker/config/thumbor/thumbor.conf.tpl /usr/local/etc/thumbor.conf.tpl
+COPY --chmod=0755 ./docker/config/etc/docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN set -eux \
+    # /data/ dir is used by thumbor
+    && mkdir /data/ \
+    && mkdir /docker-entrypoint.init.d/
+
+# Enable nobody user
+#RUN set -eux \
+#    && chown -R nobody:nogroup /usr/local/etc/ /data/ /docker-entrypoint.init.d/
+#USER nobody
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["thumbor"]
+
+EXPOSE ${PORT}
+HEALTHCHECK --timeout=15s CMD curl --silent --fail http://127.0.0.1:${PORT}/healthcheck

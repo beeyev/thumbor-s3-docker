@@ -1,0 +1,94 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  schedule:
+    - cron: "0 0 1 * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  build-thumbor:
+    name: Build, test and publish
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        baseDist: [ 'slim-alpine', 'alpine' ]
+        version: [ '7.0' ]
+
+    steps:
+      -
+        name: Prepare env variables
+        run: |
+          echo "BUILD_DATE=$(TZ=':UTC' date +'%Y-%m-%d %H:%M:%S (%Z)')" >> ${GITHUB_ENV}
+          echo "BUILD_INFO=${GITHUB_SHA::7}" >> ${GITHUB_ENV}
+
+      -
+        name: Check out code
+        uses: actions/checkout@v2
+
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      -
+        name: Build images and push to registry
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/amd64
+          cache-from: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}
+          cache-to: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}, mode=max
+          context: .
+          file: ./docker/thumbor-${{ matrix.version }}/Dockerfile-${{ matrix.baseDist }}
+          build-args: |
+            BUILD_DATE=${{ env.BUILD_DATE }}
+            BUILD_INFO=${{ env.BUILD_INFO }}
+          tags: |
+            beeyev/thumbor-s3:${{ matrix.version }}-${{ matrix.baseDist }}
+            ghcr.io/beeyev/thumbor-s3:${{ matrix.version }}-${{ matrix.baseDist }}
+          pull: true
+          push: true
+
+
+  Update-Docker-Hub-repo-description:
+    name: Update Docker Hub repo description
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        name: Check out code
+        uses: actions/checkout@v2
+
+      -
+        name: Update Docker Hub repo description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: beeyev/thumbor-s3
+          #short-description: ${{ github.event.repository.description }}
