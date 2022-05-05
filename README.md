@@ -55,7 +55,7 @@ On production, you should enable a healthcheck to make sure, that your service i
 By default, it's `https//host:port/healthcheck/`. You can change it with the `HEALTHCHECK_ROUTE` environment variable.
 
 ## How to use this image
-Please take a look at [**this example**](https://github.com/beeyev/thumbor-s3-docker/tree/master/docs/examples/read-from-S3-cache-to-S3), it explains everything you need to know to begin working with Thumbor.
+Please take a look at [**this example**](https://github.com/beeyev/thumbor-s3-docker/tree/master/examples/read-from-S3-cache-to-S3), it explains everything you need to know to begin working with Thumbor.
 
 ## Issues
 Bug reports and feature requests can be submitted on the [Github Issue Tracker](https://github.com/beeyev/thumbor-s3-docker/issues).

@@ -1,7 +1,7 @@
 # Read-from-S3-cache-to-S3
 ### Use S3 storage as a source for images and another S3 storage to store cached results
 
-1. Take a look at [`docker-compose.yml`](./docker-compose.yml) example file, copy it to your machine.
+1. Take a look at [`docker-compose.yml`](docker-compose.yml) example file, copy it to your machine.
 2. Run command `docker-compose up --build --no-deps --detach --remove-orphans` to spin up the containers.
 3. Check that Thumbor container has started correctly by opening this url in your browser: http://localhost:8888/healthcheck  
 
