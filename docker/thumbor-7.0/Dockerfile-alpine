@@ -55,7 +55,7 @@ RUN apk add --quiet --no-cache cairo \
 
 ## py3exiv2 is required for working with EXIF metadata
 RUN apk add --quiet --no-cache exiv2 boost-dev \
-    && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev build-base \
+    && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev musl-dev build-base \
     && pip install --quiet --no-cache-dir py3exiv2==0.9.* \
     && apk del .build-deps-py3exiv2
 
