@@ -61,8 +61,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64
-          cache-from: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}
-          cache-to: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}, mode=max
+          #cache-from: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}
+          #cache-to: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}, mode=max
           context: .
           file: ./docker/thumbor-${{ matrix.version }}/Dockerfile-${{ matrix.baseDist }}
           build-args: |
