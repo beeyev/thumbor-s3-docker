@@ -1,8 +1,8 @@
-# docker build -t thumbor-alpine --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.0/Dockerfile-slim-alpine . && docker run --rm -it thumbor-slim-alpine
+# docker build -t thumbor-slim-alpine --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.0/Dockerfile-slim-alpine . && docker run --rm -it thumbor-slim-alpine
 # Slim Thumbor docker image
-FROM python:3.9-alpine
+FROM python:3.10-alpine
 
-LABEL org.opencontainers.image.source https://github.com/beeyev/thumbor-s3-docker
+LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
 
 ENV TERM="xterm-256color" \
 LANGUAGE="en_US.UTF-8" \
@@ -21,6 +21,7 @@ RUN set -eux \
     nano \
     curl \
     iputils \
+    tini \
     # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
     libjpeg-turbo-utils
 
@@ -78,7 +79,7 @@ RUN set -eux \
 #    && chown -R nobody:nogroup /usr/local/etc/ /data/ /docker-entrypoint.init.d/
 #USER nobody
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 CMD ["thumbor"]
 
 EXPOSE ${PORT}

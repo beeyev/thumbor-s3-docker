@@ -1,8 +1,8 @@
 # docker build -t thumbor-alpine --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.0/Dockerfile-alpine . && docker run --rm -it Dockerfile-alpine
 # Full-featured Thumbor docker image
-FROM python:3.9-alpine
+FROM python:3.10-alpine
 
-LABEL org.opencontainers.image.source https://github.com/beeyev/thumbor-s3-docker
+LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
 
 ENV TERM="xterm-256color" \
 LANGUAGE="en_US.UTF-8" \
@@ -21,6 +21,7 @@ RUN set -eux \
     nano \
     curl \
     iputils \
+    tini \
     # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
     libjpeg-turbo-utils
 
@@ -56,7 +57,7 @@ RUN apk add --quiet --no-cache cairo \
 ## py3exiv2 is required for working with EXIF metadata
 RUN apk add --quiet --no-cache exiv2 boost-dev \
     && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev build-base \
-    && pip install --quiet --no-cache-dir py3exiv2==0.9.* \
+    && pip install --quiet --no-cache-dir py3exiv2==0.11.* \
     && apk del .build-deps-py3exiv2
 
 # Cleanup
@@ -86,14 +87,16 @@ COPY --chmod=0755 ./docker/config/etc/docker-entrypoint.sh /docker-entrypoint.sh
 RUN set -eux \
     # /data/ dir is used by thumbor
     && mkdir /data/ \
-    && mkdir /docker-entrypoint.init.d/
+    && mkdir /docker-entrypoint.init.d/ \
+    # Running `thumbor-doctor` to smoke test functionality
+    && thumbor-doctor
 
 # Enable nobody user
 #RUN set -eux \
 #    && chown -R nobody:nogroup /usr/local/etc/ /data/ /docker-entrypoint.init.d/
 #USER nobody
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 CMD ["thumbor"]
 
 EXPOSE ${PORT}
