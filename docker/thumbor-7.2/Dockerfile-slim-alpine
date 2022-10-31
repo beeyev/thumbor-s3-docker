@@ -8,6 +8,9 @@ ENV TERM="xterm-256color" \
 LANGUAGE="en_US.UTF-8" \
 LANG="en_US.UTF-8" \
 LC_TIME="en_GB.UTF-8"
+
+ENV PYTHONUNBUFFERED=1
+
 # Enable jpegtran optimizer https://thumbor.readthedocs.io/en/latest/jpegtran.html#jpegtran
 ENV OPTIMIZERS="['thumbor.optimizers.jpegtran']"
 
