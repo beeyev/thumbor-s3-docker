@@ -1,5 +1,5 @@
-# docker build -t thumbor-slim-alpine --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.1/Dockerfile-slim-alpine . && docker run --rm -it thumbor-slim-alpine
-# Slim Thumbor docker image
+# docker build -t thumbor-alpine --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.2/Dockerfile-alpine . && docker run --rm -it thumbor-alpine
+# Full-featured Thumbor docker image
 FROM python:3.10-alpine
 
 LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
@@ -36,7 +36,7 @@ RUN set -eux \
         # Jinja2 and envtpl are required to work with environtment variables
         Jinja2==3.0.* envtpl==0.6.* \
         # pycurl is required for thumbor
-        pycurl==7.45.* thumbor==7.1.* thumbor-aws==0.4.* tc_prometheus==0.1.* \
+        pycurl==7.45.* thumbor==7.2.* thumbor-aws==0.4.* tc_prometheus==2.* \
     && thumbor --version && envtpl --help
 
 ##
@@ -44,6 +44,21 @@ RUN set -eux \
 ##
 ## `gifsicle` is a Thumbor requirement for better processing of GIF images
 RUN apk add --quiet --no-cache gifsicle
+
+## `ffmpeg` is used by Thumbor for rendering animated images as GIFV
+RUN apk add --quiet --no-cache ffmpeg
+
+## cairosvg is for reading SVG files.
+RUN apk add --quiet --no-cache cairo \
+    && apk add --quiet --no-cache --virtual .build-deps-cairosvg libffi-dev \
+    && pip install --quiet --no-cache-dir cairosvg==2.5.* \
+    && apk del .build-deps-cairosvg
+
+## py3exiv2 is required for working with EXIF metadata
+RUN apk add --quiet --no-cache exiv2 boost-dev \
+    && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev build-base \
+    && pip install --quiet --no-cache-dir py3exiv2==0.11.* \
+    && apk del .build-deps-py3exiv2
 
 # Cleanup
 RUN set -eux \
@@ -72,7 +87,9 @@ COPY --chmod=0755 ./docker/config/etc/docker-entrypoint.sh /docker-entrypoint.sh
 RUN set -eux \
     # /data/ dir is used by thumbor
     && mkdir /data/ \
-    && mkdir /docker-entrypoint.init.d/
+    && mkdir /docker-entrypoint.init.d/ \
+    # Running `thumbor-doctor` to smoke test functionality
+    && thumbor-doctor
 
 # Enable nobody user
 #RUN set -eux \

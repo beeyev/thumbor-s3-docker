@@ -24,7 +24,8 @@ jobs:
       fail-fast: false
       matrix:
         baseDist: [ 'slim-alpine', 'alpine' ]
-        version: [ '7.1' ]
+        versionMinor: [ '7.2' ]
+        versionMajor: [ '7' ]
 
     steps:
       -
@@ -64,13 +65,15 @@ jobs:
           #cache-from: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}
           #cache-to: type=gha, scope=${{ github.workflow }}-${{ matrix.version }}-${{ matrix.baseDist }}, mode=max
           context: .
-          file: ./docker/thumbor-${{ matrix.version }}/Dockerfile-${{ matrix.baseDist }}
+          file: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
           build-args: |
             BUILD_DATE=${{ env.BUILD_DATE }}
             BUILD_INFO=${{ env.BUILD_INFO }}
           tags: |
-            beeyev/thumbor-s3:${{ matrix.version }}-${{ matrix.baseDist }}
-            ghcr.io/beeyev/thumbor-s3:${{ matrix.version }}-${{ matrix.baseDist }}
+            beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
+            beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
+            ghcr.io/beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
+            ghcr.io/beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
           pull: true
           push: true
 
