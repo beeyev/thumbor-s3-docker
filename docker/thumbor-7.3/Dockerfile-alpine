@@ -1,6 +1,6 @@
 # docker build -t thumbor-alpine --build-arg BUILDKIT_INLINE_CACHE=1 -f ./docker/thumbor-7.3/Dockerfile-alpine . && docker run --rm -it thumbor-alpine
 # Full-featured Thumbor docker image
-FROM python:3.10-alpine
+FROM python:3.11.0-alpine
 
 LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
 
