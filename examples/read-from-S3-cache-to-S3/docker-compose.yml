@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   thumbor:
-    image: beeyev/thumbor-s3:7.2-slim-alpine
+    image: beeyev/thumbor-s3:7.3-slim-alpine
     restart: unless-stopped
     tty: true
     ports:

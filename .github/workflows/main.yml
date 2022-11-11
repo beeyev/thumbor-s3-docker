@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         baseDist: [ 'slim-alpine', 'alpine' ]
-        versionMinor: [ '7.2' ]
+        versionMinor: [ '7.3' ]
         versionMajor: [ '7' ]
 
     steps:
