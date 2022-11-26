@@ -15,45 +15,39 @@ PYTHONDONTWRITEBYTECODE=1
 # Enable jpegtran optimizer https://thumbor.readthedocs.io/en/latest/jpegtran.html#jpegtran
 ENV OPTIMIZERS="['thumbor.optimizers.jpegtran']"
 
-WORKDIR /app
+WORKDIR /app/
 
 RUN set -eux \
-  && apk add --quiet --no-cache \
-    bash \
-    tzdata \
-    figlet \
-    nano \
-    curl \
-    iputils \
-    tini \
-    # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
-    libjpeg-turbo-utils
+    && apk add --quiet --no-cache \
+        bash \
+        tzdata \
+        figlet \
+        nano \
+        curl \
+        iputils \
+        tini \
+        # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
+        libjpeg-turbo-utils
 
 RUN set -eux \
-  && apk add --quiet --no-cache --virtual .build-deps \
+    && apk add --quiet --no-cache --virtual .build-deps \
     # thumbor requirements:
-    curl-dev g++
-
-RUN set -eux \
+    curl-dev g++ \
+    # Thumbor
     && pip install --quiet --no-cache-dir --upgrade pip \
     && pip install --quiet --no-cache-dir \
         # Jinja2 and envtpl are required to work with environtment variables
         Jinja2==3.0.* envtpl==0.6.* \
         # pycurl is required for thumbor
         pycurl==7.* thumbor==7.3.* thumbor-aws==0.4.* tc_prometheus==2.* \
-    && thumbor --version && envtpl --help
-
-##
-## Optional extensions
-##
-## `gifsicle` is a Thumbor requirement for better processing of GIF images
-RUN apk add --quiet --no-cache gifsicle
-
-# Cleanup
-RUN set -eux \
-    && apk del .build-deps \
-    && rm -rf /var/cache/apk/* \
-    && rm -rf /root/.cache
+    && thumbor --version && envtpl --help \
+    ##
+    ## Optional extensions
+    ##
+    ## `gifsicle` is a Thumbor requirement for better processing of GIF images
+    && apk add --quiet --no-cache gifsicle \
+    # Cleanup
+    && apk del .build-deps
 
 #set bash as a default shell
 RUN set -eux \

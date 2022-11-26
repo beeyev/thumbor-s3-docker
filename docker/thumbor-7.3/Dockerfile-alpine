@@ -15,60 +15,55 @@ PYTHONDONTWRITEBYTECODE=1
 # Enable jpegtran optimizer https://thumbor.readthedocs.io/en/latest/jpegtran.html#jpegtran
 ENV OPTIMIZERS="['thumbor.optimizers.jpegtran']"
 
-WORKDIR /app
+WORKDIR /app/
 
 RUN set -eux \
-  && apk add --quiet --no-cache \
-    bash \
-    tzdata \
-    figlet \
-    nano \
-    curl \
-    iputils \
-    tini \
-    # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
-    libjpeg-turbo-utils
+    && apk add --quiet --no-cache \
+        bash \
+        tzdata \
+        figlet \
+        nano \
+        curl \
+        iputils \
+        tini \
+        # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
+        libjpeg-turbo-utils
 
 RUN set -eux \
-  && apk add --quiet --no-cache --virtual .build-deps \
+    && apk add --quiet --no-cache --virtual .build-deps \
     # thumbor requirements:
-    curl-dev g++
-
-RUN set -eux \
+    curl-dev g++ \
+    # Thumbor
     && pip install --quiet --no-cache-dir --upgrade pip \
     && pip install --quiet --no-cache-dir \
         # Jinja2 and envtpl are required to work with environtment variables
         Jinja2==3.0.* envtpl==0.6.* \
         # pycurl is required for thumbor
         pycurl==7.* thumbor==7.3.* thumbor-aws==0.4.* tc_prometheus==2.* \
-    && thumbor --version && envtpl --help
-
-##
-## Optional extensions
-##
-## `gifsicle` is a Thumbor requirement for better processing of GIF images
-RUN apk add --quiet --no-cache gifsicle
-
-## `ffmpeg` is used by Thumbor for rendering animated images as GIFV
-RUN apk add --quiet --no-cache ffmpeg
-
-## cairosvg is for reading SVG files.
-RUN apk add --quiet --no-cache cairo \
+    && thumbor --version && envtpl --help \
+    #
+    ## Optional extensions
+    #
+    ## `gifsicle` is a Thumbor requirement for better processing of GIF images
+    && apk add --quiet --no-cache gifsicle \
+    #
+    ## `ffmpeg` is used by Thumbor for rendering animated images as GIFV
+    && apk add --quiet --no-cache ffmpeg \
+    #
+    ## cairosvg is for reading SVG files.
+    && apk add --quiet --no-cache cairo \
     && apk add --quiet --no-cache --virtual .build-deps-cairosvg libffi-dev \
     && pip install --quiet --no-cache-dir cairosvg==2.5.* \
-    && apk del .build-deps-cairosvg
-
-## py3exiv2 is required for working with EXIF metadata
-RUN apk add --quiet --no-cache exiv2 boost-dev \
+    && apk del .build-deps-cairosvg \
+    #
+    ## py3exiv2 is required for working with EXIF metadata
+    && apk add --quiet --no-cache exiv2 boost-dev \
     && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev build-base \
     && pip install --quiet --no-cache-dir py3exiv2==0.11.* \
-    && apk del .build-deps-py3exiv2
-
-# Cleanup
-RUN set -eux \
-    && apk del .build-deps \
-    && rm -rf /var/cache/apk/* \
-    && rm -rf /root/.cache
+    && apk del .build-deps-py3exiv2 \
+    #
+    # Cleanup
+    && apk del .build-deps
 
 #set bash as a default shell
 RUN set -eux \
