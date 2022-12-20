@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "docker"
-    directory: "/docker/thumbor-7.3/"
+    directory: "/docker/thumbor-7.4/"
     schedule:
       interval: "weekly"
 

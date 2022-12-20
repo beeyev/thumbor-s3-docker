@@ -22,10 +22,12 @@ Thumbor S3 Docker is available in two variants of docker images, lightweight (sl
 > Before choosing the full-featured image version, make sure that you really need these extra functionality, since the resulting docker container is two times bigger than `slim-alpine`
 
 ### Currently maintained docker images:  
+`thumbor-s3:alpine`  
+`thumbor-s3:slim-alpine`  
 `thumbor-s3:7-alpine`  
 `thumbor-s3:7-slim-alpine`  
-`thumbor-s3:7.3-alpine`  
-`thumbor-s3:7.3-slim-alpine`
+`thumbor-s3:7.4-alpine`  
+`thumbor-s3:7.4-slim-alpine`
   
 [Docker Hub](https://hub.docker.com/r/beeyev/thumbor-s3) | [Github packages](https://github.com/beeyev/thumbor-s3-docker/pkgs/container/thumbor-s3)  
 
