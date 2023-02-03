@@ -39,7 +39,7 @@ RUN set -eux \
         # Jinja2 and envtpl are required to work with environtment variables
         Jinja2==3.0.* envtpl==0.6.* \
         # pycurl is required for thumbor
-        pycurl==7.* thumbor==7.4.* thumbor-aws==0.5.* tc_prometheus==2.* \
+        pycurl==7.* thumbor==7.4.* thumbor-aws==0.6.* tc_prometheus==2.* \
     && thumbor --version && envtpl --help \
     ##
     ## Optional extensions
