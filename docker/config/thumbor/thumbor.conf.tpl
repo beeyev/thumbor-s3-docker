@@ -213,8 +213,8 @@ ALLOW_UNSAFE_URL = {{ ALLOW_UNSAFE_URL | default(False) }}
 ALLOW_OLD_URLS = {{ ALLOW_OLD_URLS | default(True) }}
 
 ## AWS access keys - used in thumbor_aws storage
-AWS_ACCESS_KEY = '{{ AWS_ACCESS_KEY_ID | default('') }}'
-AWS_SECRET_KEY = '{{ AWS_SECRET_ACCESS_KEY | default('') }}'
+AWS_ACCESS_KEY = '{{ AWS_ACCESS_KEY_ID | default(None) }}'
+AWS_SECRET_KEY = '{{ AWS_SECRET_ACCESS_KEY | default(None) }}'
 
 ################################################################################
 
@@ -692,11 +692,11 @@ AWS_LOADER_BUCKET_NAME = '{{ AWS_LOADER_BUCKET_NAME | default('eu-thumbor-1') }}
 
 ## Secret access key for S3 Loader.
 ## Defaults to: ''
-AWS_LOADER_S3_SECRET_ACCESS_KEY = '{{ AWS_LOADER_S3_SECRET_ACCESS_KEY | default('') }}'
+AWS_LOADER_S3_SECRET_ACCESS_KEY = '{{ AWS_LOADER_S3_SECRET_ACCESS_KEY | default(None) }}'
 
 ## Access key ID for S3 Loader.
 ## Defaults to: ''
-AWS_LOADER_S3_ACCESS_KEY_ID = '{{ AWS_LOADER_S3_ACCESS_KEY_ID | default('') }}'
+AWS_LOADER_S3_ACCESS_KEY_ID = '{{ AWS_LOADER_S3_ACCESS_KEY_ID | default(None) }}'
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: ''
@@ -719,11 +719,11 @@ AWS_STORAGE_BUCKET_NAME = '{{ AWS_STORAGE_BUCKET_NAME | default('thumbor') }}'
 
 ## Secret access key for S3 to allow thumbor to store objects there.
 ## Defaults to: ''
-AWS_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_STORAGE_S3_SECRET_ACCESS_KEY | default('') }}'
+AWS_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_STORAGE_S3_SECRET_ACCESS_KEY | default(None) }}'
 
 ## Access key ID for S3 to allow thumbor to store objects there.
 ## Defaults to: ''
-AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID | default('') }}'
+AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID | default(None) }}'
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: ''
@@ -754,11 +754,11 @@ AWS_RESULT_STORAGE_BUCKET_NAME = '{{ AWS_RESULT_STORAGE_BUCKET_NAME | default('t
 
 ## Secret access key for S3 to allow thumbor to store objects there.
 ## Defaults to: None
-AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY | default('') }}'
+AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY | default(None) }}'
 
 ## Access key ID for S3 to allow thumbor to store objects there.
 ## Defaults to: ''
-AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID | default('') }}'
+AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID | default(None) }}'
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: ''
