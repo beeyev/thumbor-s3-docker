@@ -40,6 +40,7 @@ RUN set -eux \
         Jinja2==3.0.* envtpl==0.6.* \
         # pycurl is required for thumbor
         pycurl==7.* thumbor==7.4.* thumbor-aws==0.6.* tc_prometheus==2.* \
+        "numpy==1.*,<1.24.0" \
     && thumbor --version && envtpl --help \
     #
     ## Optional extensions
