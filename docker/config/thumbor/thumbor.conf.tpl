@@ -700,7 +700,7 @@ AWS_LOADER_S3_ACCESS_KEY_ID = '{{ AWS_LOADER_S3_ACCESS_KEY_ID | default(None) }}
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: ''
-AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL | default('') }}'
+AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL | default(None) }}'
 
 ## Loader prefix path.
 ## Defaults to: ''
@@ -727,7 +727,7 @@ AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID | default(None) 
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: ''
-AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL | default('') }}'
+AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL | default(None) }}'
 
 ## Storage prefix path.
 ## Defaults to: ''
@@ -762,7 +762,7 @@ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID | 
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: ''
-AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL | default('') }}'
+AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL | default(None) }}'
 
 ## Result Storage prefix path.
 ## Defaults to: None
