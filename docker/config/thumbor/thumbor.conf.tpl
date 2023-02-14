@@ -691,16 +691,16 @@ AWS_LOADER_REGION_NAME = '{{ AWS_LOADER_REGION_NAME | default('eu-west-1') }}'
 AWS_LOADER_BUCKET_NAME = '{{ AWS_LOADER_BUCKET_NAME | default('eu-thumbor-1') }}'
 
 ## Secret access key for S3 Loader.
-## Defaults to: ''
+## Defaults to: None
 AWS_LOADER_S3_SECRET_ACCESS_KEY = '{{ AWS_LOADER_S3_SECRET_ACCESS_KEY | default(None) }}'
 
 ## Access key ID for S3 Loader.
-## Defaults to: ''
+## Defaults to: None
 AWS_LOADER_S3_ACCESS_KEY_ID = '{{ AWS_LOADER_S3_ACCESS_KEY_ID | default(None) }}'
 
 ## Endpoint URL for S3 API. Very useful for testing.
-## Defaults to: ''
-AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL | default('') }}'
+## Defaults to: None
+AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL | default(None) }}'
 
 ## Loader prefix path.
 ## Defaults to: ''
@@ -718,16 +718,16 @@ AWS_STORAGE_REGION_NAME = '{{ AWS_STORAGE_REGION_NAME | default('eu-west-1') }}'
 AWS_STORAGE_BUCKET_NAME = '{{ AWS_STORAGE_BUCKET_NAME | default('thumbor') }}'
 
 ## Secret access key for S3 to allow thumbor to store objects there.
-## Defaults to: ''
+## Defaults to: None
 AWS_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_STORAGE_S3_SECRET_ACCESS_KEY | default(None) }}'
 
 ## Access key ID for S3 to allow thumbor to store objects there.
-## Defaults to: ''
+## Defaults to: None
 AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID | default(None) }}'
 
 ## Endpoint URL for S3 API. Very useful for testing.
-## Defaults to: ''
-AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL | default('') }}'
+## Defaults to: None
+AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL | default(None) }}'
 
 ## Storage prefix path.
 ## Defaults to: ''
@@ -757,12 +757,12 @@ AWS_RESULT_STORAGE_BUCKET_NAME = '{{ AWS_RESULT_STORAGE_BUCKET_NAME | default('t
 AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY | default(None) }}'
 
 ## Access key ID for S3 to allow thumbor to store objects there.
-## Defaults to: ''
+## Defaults to: None
 AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID | default(None) }}'
 
 ## Endpoint URL for S3 API. Very useful for testing.
-## Defaults to: ''
-AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL | default('') }}'
+## Defaults to: None
+AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL | default(None) }}'
 
 ## Result Storage prefix path.
 ## Defaults to: None
