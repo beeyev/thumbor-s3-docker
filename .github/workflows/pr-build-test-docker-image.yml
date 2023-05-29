@@ -1,0 +1,34 @@
+name: Build Test Docker Images
+
+on:
+  pull_request:
+    types: [labeled]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write
+    if: contains(github.event.label.name, 'make-test-build')
+#    if: |
+#      (github.event.action == 'labeled' && github.event.label.name == 'make-test-build') ||
+#      (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'make-test-build'))
+    steps:
+      - name: Remove `test-build` label
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: make-test-build
+          fail_on_error: true
+
+      - name: Sticky Pull Request Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            > [Building test docker images...](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
