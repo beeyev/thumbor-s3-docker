@@ -26,7 +26,6 @@ jobs:
         uses: actions-ecosystem/action-remove-labels@v1
         with:
           labels: make-test-build
-          fail_on_error: true
 
       - name: Sticky Pull Request Comment
         uses: marocchino/sticky-pull-request-comment@v2
@@ -45,9 +44,10 @@ jobs:
         versionMajor: [ '7' ]
     with:
       DOCKER_REGISTRY_IMAGE: |
-        ghcr.io/${{ github.repository_owner }}/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}-test
-        ghcr.io/${{ github.repository_owner }}/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}-test
-      DOCKERFILE_PATH: ./docker/thumbor-7.5/Dockerfile-${{ matrix.baseDist }}
+        ghcr.io/beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}-test
+        ghcr.io/beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}-test
+      DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+    secrets: inherit
 
 #  docker-image-deploy:
 #    name: Build docker test image
@@ -56,6 +56,8 @@ jobs:
 #      fail-fast: false
 #      matrix:
 #        baseDist: [ 'slim-alpine', 'alpine' ]
+#        versionMinor: [ '7.5' ]
 #    with:
-#      DOCKER_REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/thumbor-s3:${{ matrix.baseDist }}-test
-#      DOCKERFILE_PATH: ./docker/thumbor-7.5/Dockerfile-${{ matrix.baseDist }}
+#      DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test
+#      DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+#    secrets: inherit

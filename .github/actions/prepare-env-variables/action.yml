@@ -20,6 +20,7 @@ runs:
       shell: bash
       run: |
         echo "DATE_YEAR_WEEKNUM=$(TZ=':UTC' date +'%Y-%U')" >> ${GITHUB_OUTPUT}
-        echo "BUILD_DATE=$(TZ=':UTC' date +'%Y-%m-%d %H:%M:%S (%Z)')" >> ${GITHUB_OUTPUT}
+        echo "BUILD_DATE=$(date -u +'%Y-%m-%d %H:%M:%S (%Z)')" >> ${GITHUB_OUTPUT}
+        echo "NOW_RFC_3339=$(date -u --rfc-3339=seconds | sed 's/ /T/')" >> ${GITHUB_OUTPUT}
         echo "BUILD_FINGERPRINT=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
         echo "CURRENT_BRANCH_NAME=$(git branch --show-current)" >> ${GITHUB_OUTPUT}
