@@ -1,8 +1,20 @@
+#
+# This file is for development purposes only.
+# If you are looking for production implementation,
+# take a look at this dir: `examples/read-from-S3-cache-to-S3`
+#
+
 services:
   thumbor:
-    image: beeyev/thumbor-s3:7.5-slim-alpine
-    restart: unless-stopped
+    container_name: 'thumbor'
+    build:
+      dockerfile: ./docker/thumbor-7.5/Dockerfile-slim-alpine
+      context: ./
+      args:
+        - 'BUILDKIT_INLINE_CACHE=1'
+        - 'BUILD_DATE=${BUILD_DATE}'
     tty: true
+    restart: unless-stopped
     ports:
       - '8888:8888'
     environment:
@@ -38,18 +50,19 @@ services:
       - 'HTTP_LOADER_VALIDATE_CERTS=False'
     depends_on:
       - minio
-    volumes:
-      - thumbor_data:/data
     networks:
       - network1
 
-  # Using minio as an example of AWS usage
+  # Do NOT use MINIO_DOMAIN or MINIO_SERVER_URL with Traefik.
+  # All Routing is done by proxy server (nginx, traefik), just tell minio where to redirect to.
+  # - MINIO_BROWSER_REDIRECT_URL=http://stash.localhost
   minio:
     image: bitnami/minio:latest
     container_name: 'minio'
     restart: unless-stopped
     tty: true
     environment:
+      - 'TZ=${TZ:-UTC}'
       - 'MINIO_ROOT_USER=admin'
       - 'MINIO_ROOT_PASSWORD=12345678'
       - 'MINIO_DEFAULT_BUCKETS=img:none,img-cache:none'
@@ -67,7 +80,5 @@ networks:
     driver: bridge
 
 volumes:
-  thumbor_data:
-    driver: local
   minio_data:
     driver: local

@@ -1,4 +1,5 @@
-# EditorConfig is awesome: http://EditorConfig.org
+# EditorConfig
+# https://gist.github.com/beeyev/da5a065d01a506d0b3d42e794f7aadf9
 
 # top-most EditorConfig file
 root = true
@@ -7,29 +8,35 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
+indent_style = space
+trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{yml,yaml}]
+[*.{yml,yaml,sls}]
 indent_style = space
 indent_size = 2
 
-[*.{neon,neon.dist}]
-indent_style = tab
-indent_size = 4
-
-[*.{md,txt}]
+[*.{md,markdown,txt}]
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = false
 
-[{Makefile,Caddyfile,*.Caddyfile}]
+[{Makefile,Caddyfile,*.Caddyfile,.gitconfig,.gitconfig.local}]
 indent_style = tab
 tab_width = 4
+
+# Python
+# https://www.python.org/dev/peps/pep-0008/#code-lay-out
+[*.py]
+indent_size = 4
+indent_style = space
+
+# Shell
+# https://google.github.io/styleguide/shell.xml#Indentation
+[*.{bash,sh,zsh}]
+indent_size = 2
+indent_style = space
 
 [{Dockerfile,Dockerfile.template.erb,Dockerfile-alpine}]
 indent_style = space
 indent_size = 4
-
-[*.env]
-insert_final_newline = false
-trim_trailing_whitespace = false
