@@ -21,7 +21,6 @@ jobs:
 #      (github.event.action == 'labeled' && github.event.label.name == 'make-test-build') ||
 #      (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'make-test-build'))
     steps:
-      - uses: crazy-max/ghaction-dump-context@v2
       - name: Remove `test-build` label
         uses: actions-ecosystem/action-remove-labels@v1
         with:

@@ -19,9 +19,6 @@ jobs:
       - name: Checkout branch - ${{ github.head_ref || github.ref_name }}
         uses: actions/checkout@v3
 
-#      - name: Debugging with tmate
-#        uses: mxschmitt/action-tmate@v3.16
-
       - name: Prepare Build Env Variables
         uses: ./.github/actions/prepare-env-variables/
         id: prepare-build-env-variables
