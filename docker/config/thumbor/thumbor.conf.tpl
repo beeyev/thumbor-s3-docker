@@ -195,6 +195,10 @@ GIF_ENGINE = '{{ GIF_ENGINE | default('thumbor.engines.gif') }}'
 ## Defaults to: 'libthumbor.url_signers.base64_hmac_sha1'
 URL_SIGNER = '{{ URL_SIGNER | default('libthumbor.url_signers.base64_hmac_sha1') }}'
 
+## Preserves Jpeg IPTC information in generated images.
+## More info: https://github.com/thumbor/thumbor/pull/1555
+PRESERVE_IPTC_INFO = {{ PRESERVE_IPTC_INFO | default(False) }}
+
 ################################################################################
 
 

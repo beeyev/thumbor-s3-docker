@@ -1,6 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 
-# Get the amount of cpu cores
+#String Colors
+NC='\033[0;m'      # Default Color
+GRN='\033[32;1m'
+RED='\033[31;1m'
+BLK='\033[30;1m'
+GRY='\033[90;1m'
+
+# Set the number of cpu cores
 export NUM_CPUS=`nproc`
 
 if [ ! -f /app/thumbor.conf ]; then
@@ -25,22 +32,23 @@ then
     NUM_PROCESSES_PARAMETER="--processes=${NUM_PROCESSES}"
 fi
 
+# Run custom script before the main docker process gets started
 for f in /docker-entrypoint.init.d/*; do
     case "$f" in
         *.sh) # this should match the set of files we check for below
+            echo "⚙	 Executing entrypoint.init file: ${f}"
             . $f
             break
             ;;
     esac
 done
 
-if [ "$1" = 'thumbor' ]; then
-    THUMBOR_EXEC="thumbor ${PORT_PARAMETER} --conf=/usr/local/etc/thumbor.conf ${LOG_PARAMETER} ${NUM_PROCESSES_PARAMETER}"
-    echo "---> $($(which thumbor) --version)"
-    echo "---> 🚀 Starting Thumbor on port ${PORT}, log level: ${LOG_LEVEL}, available ${NUM_CPUS} cpu cores..."
-    echo "--->  exec command: ${THUMBOR_EXEC}"
+THUMBOR_EXEC="thumbor ${PORT_PARAMETER} --conf=/usr/local/etc/thumbor.conf ${LOG_PARAMETER} ${NUM_PROCESSES_PARAMETER}"
 
-    exec ${THUMBOR_EXEC}
-fi
+printf "\n\n${GRN}--->${NC} $($(which thumbor) --version)"
+printf "\n${GRN}--->${NC} Starting Thumbor on port: ${GRN}${PORT}${NC}, log level: ${GRN}${LOG_LEVEL}${NC}, CPU cores available: ${GRN}${NUM_CPUS}${NC}"
+printf "\n${GRN}--->${NC} Exec command: ${GRY}${THUMBOR_EXEC}${NC}"
+printf "\n${GRN}--->${NC} Docker image build date: ${GRY}${BUILD_DATE}${NC}, fingerprint: ${GRY}${BUILD_FINGERPRINT}${NC}"
+printf "\n${GRN}--->${NC} Docker image project website: ${GRY}https://github.com/beeyev/thumbor-s3-docker${NC}\n\n"
+exec ${THUMBOR_EXEC}
 
-exec "$@"

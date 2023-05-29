@@ -1,0 +1,47 @@
+name: Build Test Docker Images
+
+on:
+  pull_request:
+    types: [labeled]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  initialization:
+    name: Initialization
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: contains(github.event.label.name, 'make-test-build')
+#    if: |
+#      (github.event.action == 'labeled' && github.event.label.name == 'make-test-build') ||
+#      (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'make-test-build'))
+    steps:
+      - uses: crazy-max/ghaction-dump-context@v2
+      - name: Remove `test-build` label
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: make-test-build
+
+      - name: Sticky Pull Request Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            > [Building test docker images...](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+  docker-image-deploy:
+    uses: ./.github/workflows/callable-build-docker-image.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        baseDist: [ 'slim-alpine', 'alpine' ]
+        versionMinor: [ '7.5' ]
+    name: Build Test Docker Images / ${{ matrix.baseDist }}-test
+    with:
+      DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test
+      DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+    secrets: inherit

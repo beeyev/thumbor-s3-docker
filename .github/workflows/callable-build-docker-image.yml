@@ -1,0 +1,66 @@
+on:
+  workflow_call:
+    inputs:
+      DOCKER_REGISTRY_IMAGE:
+        required: true
+        type: string
+      DOCKERFILE_PATH:
+        required: true
+        type: string
+
+jobs:
+  build-docker-image:
+    name: Build Docker Image
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout branch - ${{ github.head_ref || github.ref_name }}
+        uses: actions/checkout@v3
+
+#      - name: Debugging with tmate
+#        uses: mxschmitt/action-tmate@v3.16
+
+      - name: Prepare Build Env Variables
+        uses: ./.github/actions/prepare-env-variables/
+        id: prepare-build-env-variables
+
+      - name: Set up Docker BuildX
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Build image and push to registry - ${{ inputs.DOCKER_REGISTRY_IMAGE }}
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64
+          context: .
+          file: ${{ inputs.DOCKERFILE_PATH }}
+          cache-from: type=registry,ref=${{ inputs.DOCKER_REGISTRY_IMAGE }}
+          cache-to: type=inline
+          build-args: |
+            BUILD_DATE=${{ steps.prepare-build-env-variables.outputs.BUILD_DATE }}
+            BUILD_FINGERPRINT=${{ steps.prepare-build-env-variables.outputs.BUILD_FINGERPRINT }}
+          tags: ${{ inputs.DOCKER_REGISTRY_IMAGE }}
+          push: true
+          labels: |
+            org.opencontainers.image.title="${{ github.event.repository.name }}"
+            org.opencontainers.image.description=${{ github.event.repository.description }}
+            org.opencontainers.image.authors="${{ github.event.repository.html_url }}"
+            org.opencontainers.image.url="https://github.com/${{ github.repository }}"
+            org.opencontainers.image.source="https://github.com/${{ github.repository }}"
+            org.opencontainers.image.created="${{ steps.prepare-build-env-variables.outputs.NOW_RFC_3339 }}"
+            org.opencontainers.image.revision="${{ steps.prepare-build-env-variables.outputs.BUILD_FINGERPRINT }}"
+            org.opencontainers.image.vendor="${{ github.event.repository.owner.login }}"

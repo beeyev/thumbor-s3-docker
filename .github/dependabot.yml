@@ -5,11 +5,6 @@
 
 version: 2
 updates:
-  - package-ecosystem: "docker"
-    directory: "/docker/thumbor-7.4/"
-    schedule:
-      interval: "weekly"
-
   # Enable version updates for Actions
   - package-ecosystem: "github-actions"
     # Look for `.github/workflows` in the `root` directory

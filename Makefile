@@ -1,5 +1,13 @@
+export DOCKER_BUILDKIT?=1
+export COMPOSE_CONVERT_WINDOWS_PATHS?=1
+export TZ?=UTC
+export BUILD_DATE?=$(shell TZ=":UTC" date '+%Y-%m-%d %H:%M:%S (%Z)')
+.EXPORT_ALL_VARIABLES:
 .PHONY: *
 .DEFAULT_GOAL := help
+
+THIS_FILE := $(abspath $(lastword $(MAKEFILE_LIST)))
+CURRENT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 ifeq (,$(shell command docker compose 2> /dev/null))
   DOCKER_COMPOSE_COMMAND = docker-compose
