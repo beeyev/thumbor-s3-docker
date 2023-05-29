@@ -13,7 +13,7 @@ concurrency:
 jobs:
   initialization:
     name: Initialization
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     if: contains(github.event.label.name, 'make-test-build')
@@ -34,30 +34,14 @@ jobs:
             > [Building test docker images...](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
   docker-image-deploy:
-    name: Build docker production images
     uses: ./.github/workflows/callable-build-docker-image.yml
     strategy:
       fail-fast: false
       matrix:
         baseDist: [ 'slim-alpine', 'alpine' ]
         versionMinor: [ '7.5' ]
-        versionMajor: [ '7' ]
+    name: Build Test Docker Images / ${{ matrix.baseDist }}-test
     with:
-      DOCKER_REGISTRY_IMAGE: |
-        ghcr.io/beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}-test
-        ghcr.io/beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}-test
+      DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test
       DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
     secrets: inherit
-
-#  docker-image-deploy:
-#    name: Build docker test image
-#    uses: ./.github/workflows/callable-build-docker-image.yml
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        baseDist: [ 'slim-alpine', 'alpine' ]
-#        versionMinor: [ '7.5' ]
-#    with:
-#      DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test
-#      DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
-#    secrets: inherit
