@@ -22,7 +22,7 @@ jobs:
         baseDist: [ 'slim-alpine', 'alpine' ]
         versionMinor: [ '7.5' ]
         versionMajor: [ '7' ]
-    name: Build Production Docker Images / ${{ matrix.versionMinor }}-${{ matrix.baseDist }}-test
+    name: Build Production Docker Images / ${{ matrix.versionMinor }}-${{ matrix.baseDist }}
     with:
       DOCKER_REGISTRY_IMAGE: |
         ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}
