@@ -1,5 +1,4 @@
-# EditorConfig
-# https://gist.github.com/beeyev/da5a065d01a506d0b3d42e794f7aadf9
+# Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
 
 # top-most EditorConfig file
 root = true

@@ -1,3 +1,5 @@
+# Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
+
 .PHONY: *
 .DEFAULT_GOAL := help
 
