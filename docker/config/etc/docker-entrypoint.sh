@@ -1,4 +1,5 @@
 #!/bin/sh
+# Alexander Tebiev - https://github.com/beeyev
 
 #String Colors
 NC='\033[0;m'      # Default Color

@@ -1,3 +1,5 @@
+# Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
+
 services:
   thumbor:
     image: beeyev/thumbor-s3:7.5-slim-alpine

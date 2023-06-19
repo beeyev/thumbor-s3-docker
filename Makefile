@@ -1,3 +1,4 @@
+# Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
 export DOCKER_BUILDKIT?=1
 export COMPOSE_CONVERT_WINDOWS_PATHS?=1
 export TZ?=UTC
