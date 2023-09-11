@@ -41,7 +41,7 @@ jobs:
     needs: docker-image-deploy
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Update Docker Hub repo description
         uses: peter-evans/dockerhub-description@v3
