@@ -18,7 +18,7 @@ jobs:
       packages: write
     steps:
       - name: Checkout branch - ${{ github.head_ref || github.ref_name }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Prepare Build Env Variables
         uses: ./.github/actions/prepare-env-variables/
