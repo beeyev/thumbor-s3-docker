@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         baseDist: [ 'slim-alpine', 'alpine' ]
-        versionMinor: [ '7.5' ]
+        versionMinor: [ '7.6' ]
         versionMajor: [ '7' ]
     name: Build Production Docker Images / ${{ matrix.versionMinor }}-${{ matrix.baseDist }}
     with:
