@@ -44,4 +44,5 @@ jobs:
     with:
       DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test
       DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+      PLATFORMS: linux/amd64
     secrets: inherit

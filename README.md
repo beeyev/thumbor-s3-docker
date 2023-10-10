@@ -1,10 +1,10 @@
 # [Thumbor S3 Docker](https://github.com/beeyev/thumbor-s3-docker)  
-> A docker image for Thumbor with AWS S3 / Minio integration for cropping, resizing, applying filters and optimizing images on the fly.
+> A Docker image for Thumbor with AWS S3 and Minio integration, designed for on-the-fly image cropping, resizing, applying filters, and image optimization.
 
 <p align="center"><a href="https://github.com/beeyev/thumbor-s3-docker"><img src="https://github.com/beeyev/thumbor-s3-docker/raw/master/docs/img/thumbor-s3-docker.jpg"></a></p>
 
 ## A little of introduction
-Thumbor S3 Docker is available in two variants of docker images, lightweight (slim) - `slim-alpine` and full-featured  - `alpine`.
+Thumbor S3 Docker is available in two variants of docker images, a lightweight (slim) - `slim-alpine` and a full-featured  - `alpine`.
 
 ### All current docker images are packed with these features:
  - AWS S3 / Minio integration support

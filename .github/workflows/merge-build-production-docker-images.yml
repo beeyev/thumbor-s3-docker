@@ -33,6 +33,7 @@ jobs:
         beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
         beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
       DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+      PLATFORMS: linux/amd64,linux/arm64
     secrets: inherit
 
   update-docker-hub-repo-description:
