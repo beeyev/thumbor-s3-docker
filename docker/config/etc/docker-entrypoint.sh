@@ -50,6 +50,6 @@ printf "\n\n${GRN}--->${NC} $($(which thumbor) --version)"
 printf "\n${GRN}--->${NC} Starting Thumbor on port: ${GRN}${PORT}${NC}, log level: ${GRN}${LOG_LEVEL}${NC}, CPU cores available: ${GRN}${NUM_CPUS}${NC}"
 printf "\n${GRN}--->${NC} Exec command: ${GRY}${THUMBOR_EXEC}${NC}"
 printf "\n${GRN}--->${NC} Docker image build date: ${GRY}${BUILD_DATE}${NC}, fingerprint: ${GRY}${BUILD_FINGERPRINT}${NC}"
-printf "\n${GRN}--->${NC} Docker image project website: ${GRY}https://github.com/beeyev/thumbor-s3-docker${NC}\n\n"
+printf "\n${GRN}--->${NC} Docker image project url: ${GRY}https://github.com/beeyev/thumbor-s3-docker${NC}\n\n"
 exec ${THUMBOR_EXEC}
 

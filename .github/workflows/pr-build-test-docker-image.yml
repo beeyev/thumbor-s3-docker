@@ -39,9 +39,10 @@ jobs:
       fail-fast: false
       matrix:
         baseDist: [ 'slim-alpine', 'alpine' ]
-        versionMinor: [ '7.5' ]
+        versionMinor: [ '7.6' ]
     name: Build Test Docker Images / ${{ matrix.baseDist }}-test
     with:
       DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test
       DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+      PLATFORMS: linux/amd64
     secrets: inherit

@@ -8,6 +8,10 @@ on:
       DOCKERFILE_PATH:
         required: true
         type: string
+      PLATFORMS:
+        required: true
+        type: string
+        default: linux/amd64
 
 jobs:
   build-docker-image:
@@ -23,6 +27,11 @@ jobs:
       - name: Prepare Build Env Variables
         uses: ./.github/actions/prepare-env-variables/
         id: prepare-build-env-variables
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ inputs.PLATFORMS }}
 
       - name: Set up Docker BuildX
         uses: docker/setup-buildx-action@v3
@@ -43,7 +52,7 @@ jobs:
       - name: Build image and push to registry - ${{ inputs.DOCKER_REGISTRY_IMAGE }}
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64
+          platforms: ${{ inputs.PLATFORMS }}
           context: .
           file: ${{ inputs.DOCKERFILE_PATH }}
           cache-from: type=registry,ref=${{ inputs.DOCKER_REGISTRY_IMAGE }}
