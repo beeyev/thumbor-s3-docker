@@ -56,7 +56,7 @@ Please check out [HMAC signing](https://thumbor.readthedocs.io/en/latest/securit
 ### Healthcheck
 On production, you should enable a healthcheck to make sure, that your service is up and running. Luckily `thumbor` comes with a simple [healthcheck API built-in](https://thumbor.readthedocs.io/en/latest/configuration.html#healthcheck).
 
-By default, it's `https//host:port/healthcheck/`. You can change it with the `HEALTHCHECK_ROUTE` environment variable.
+By default, it's `https//host:port/healthcheck/`.
 
 ## How to use this image
 Please take a look at [**this example**](https://github.com/beeyev/thumbor-s3-docker/tree/master/examples/read-from-S3-cache-to-S3), it explains everything you need to know to begin working with Thumbor.
