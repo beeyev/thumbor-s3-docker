@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
 # Slim Thumbor docker image
-# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.6/Dockerfile-slim-alpine ./ && docker run -it --rm thumbor-slim-alpine
+# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.7/Dockerfile-slim-alpine ./ && docker run -it --rm thumbor-slim-alpine
 FROM python:3.11-alpine
 
 LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
@@ -42,7 +42,7 @@ RUN set -eux \
         # Jinja2 and envtpl are required to work with environtment variables
         Jinja2==3.0.* envtpl==0.6.* \
         # pycurl is required for thumbor
-        pycurl==7.* thumbor==7.6.* thumbor-aws==0.6.* tc_prometheus==2.* \
+        pycurl==7.* thumbor==7.7.* thumbor-aws==0.7.* tc_prometheus==2.* \
         "numpy==1.*,<1.24.0" \
     && thumbor --version && envtpl --help \
     ##

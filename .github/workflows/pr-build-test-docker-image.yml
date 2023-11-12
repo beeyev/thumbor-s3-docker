@@ -39,7 +39,7 @@ jobs:
       fail-fast: false
       matrix:
         baseDist: [ 'slim-alpine', 'alpine' ]
-        versionMinor: [ '7.6' ]
+        versionMinor: [ '7.7' ]
     name: Build Test Docker Images / ${{ matrix.baseDist }}-test
     with:
       DOCKER_REGISTRY_IMAGE: ghcr.io/beeyev/thumbor-s3:${{ matrix.baseDist }}-test

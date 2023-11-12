@@ -9,7 +9,7 @@ services:
   thumbor:
     container_name: 'thumbor'
     build:
-      dockerfile: ./docker/thumbor-7.6/Dockerfile-slim-alpine
+      dockerfile: ./docker/thumbor-7.7/Dockerfile-slim-alpine
       context: ./
       args:
         - 'BUILDKIT_INLINE_CACHE=1'
