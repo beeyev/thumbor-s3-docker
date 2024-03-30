@@ -40,10 +40,12 @@ RUN set -eux \
     && pip install --quiet --no-cache-dir --upgrade pip \
     && pip install --quiet --no-cache-dir \
         # Jinja2 and envtpl are required to work with environtment variables
-        Jinja2==3.0.* envtpl==0.6.* \
+        Jinja2==3.1.* envtpl==0.7.* \
         # pycurl is required for thumbor
-        pycurl==7.* thumbor==7.7.* thumbor-aws==0.6.* tc_prometheus==2.* \
-        "numpy==1.*,<1.24.0" \
+        "pycurl==7.*,>=7.45.2" thumbor==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
+        "numpy==1.*,>=1.26.3" \
+        # sentry is required for error tracking
+        "sentry-sdk==1.*,>=1.39.1" \
     && thumbor --version && envtpl --help \
     ##
     ## Optional extensions
