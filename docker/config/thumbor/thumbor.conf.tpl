@@ -185,6 +185,7 @@ RESULT_STORAGE = '{{ RESULT_STORAGE | default('thumbor.result_storages.file_stor
 
 ## The imaging engine thumbor should use to perform image operations. This must
 ## be the full name of a python module (python must be able to import it)
+## Possible values: 'thumbor.engines.pil', 'thumbor.engines.opencv'
 ## Defaults to: 'thumbor.engines.pil'
 ENGINE = '{{ ENGINE | default('thumbor.engines.pil') }}'
 

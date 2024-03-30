@@ -96,7 +96,6 @@ RUN set -eux \
     # /data/ dir is used by thumbor
     && mkdir /data/ \
     && mkdir /docker-entrypoint.init.d/ \
-    && thumbor --version \
     # Running `thumbor-doctor` to smoke test functionality
     && thumbor-doctor
 

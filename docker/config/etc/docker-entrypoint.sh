@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Alexander Tebiev - https://github.com/beeyev
 
 #String Colors

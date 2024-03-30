@@ -34,8 +34,8 @@ Thumbor S3 Docker is available in two variants of docker images, a lightweight (
 
 ## Configuring Thumbor S3
 All the configuration can be done via environment variables. For a list of all the variables, please check [this config file](https://github.com/beeyev/thumbor-s3-docker/raw/master/docker/config/thumbor/thumbor.conf.tpl).  
-Use variable names from the file as the environment variables to configure your docker container. 
-Apart from variables in the config file mentioned above, there are some extra environment variables:  
+Use variable names from the file as the environment variables to configure your docker container.
+Besides the variables mentioned in the above config file, there are some additional environment variables:  
  - `PORT` - The port to run this Thumbor instance at. Default: `8888`
  - `LOG_LEVEL` - The log level to be used. Possible values are: `debug, info, warning, error, critical`. Default: `warning`
  - `NUM_PROCESSES` - Number of Thumbor processes to run. Possible values are: `0` - auto detect, `1` - no forks created, or set your number. Default: `0`
