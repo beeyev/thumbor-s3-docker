@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        baseDist: [ 'slim-alpine', 'full-functionality-debian' ]
+        baseDist: [ 'slim-alpine', 'debian' ]
         versionMinor: [ '7.7' ]
     name: Build Test Docker Images / ${{ matrix.baseDist }}-test
     with:
