@@ -33,7 +33,7 @@ Thumbor S3 Docker is available in two variants of docker images, a lightweight (
 `thumbor-s3:7.7-debian`  
 `thumbor-s3:7.7-slim-alpine`
   
-[`Docker Hub`](https://hub.docker.com/r/beeyev/thumbor-s3) | [`Github packages`](https://github.com/beeyev/thumbor-s3-docker/pkgs/container/thumbor-s3) | [`Red Hat quay.io`](https://quay.io/beeyev/thumbor-s3)  
+[Docker Hub](https://hub.docker.com/r/beeyev/thumbor-s3) | [Github packages](https://github.com/beeyev/thumbor-s3-docker/pkgs/container/thumbor-s3) | [Red Hat quay.io](https://quay.io/beeyev/thumbor-s3)  
 
 
 ## Configuring Thumbor S3
