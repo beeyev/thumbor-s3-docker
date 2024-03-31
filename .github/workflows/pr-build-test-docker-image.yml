@@ -33,6 +33,15 @@ jobs:
           message: |
             > [Building test docker images...](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
+      - name: Update Quay.io description
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_APIKEY: ${{ secrets.QUAY_TOKEN }}
+        with:
+          destination_container_repo: quay.io/beeyev/thumbor-s3
+          provider: quay
+          readme_file: 'README.md'
+
   docker-image-deploy:
     uses: ./.github/workflows/callable-build-docker-image.yml
     strategy:
