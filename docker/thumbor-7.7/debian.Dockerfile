@@ -51,14 +51,6 @@ RUN set -eux \
         thumbor[all]==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
         && thumbor --version && envtpl --help
 
-LABEL org.opencontainers.image.title="Thumbor S3" \
-    org.opencontainers.image.description="Docker image for Thumbor with AWS S3 and Minio integration" \
-    org.opencontainers.image.authors="https://github.com/beeyev/" \
-    org.opencontainers.image.vendor="ThumborS3" \
-    org.opencontainers.image.documentation="https://github.com/beeyev/thumbor-s3-docker" \
-    org.opencontainers.image.url="https://github.com/beeyev/thumbor-s3-docker" \
-    org.opencontainers.image.source="https://github.com/beeyev/thumbor-s3-docker"
-
 ARG TZ='UTC'
 ENV TZ=$TZ
 

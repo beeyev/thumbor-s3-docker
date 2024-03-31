@@ -4,8 +4,6 @@
 # docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.7/slim-alpine.Dockerfile ./ && docker run -it --rm thumbor-slim-alpine
 FROM python:3.12-alpine
 
-LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
-
 ENV TERM="xterm-256color" \
 LANGUAGE="en_US.UTF-8" \
 LANG="en_US.UTF-8" \
@@ -58,6 +56,9 @@ RUN set -eux \
     && apk add --quiet --no-cache gifsicle \
     # Cleanup
     && apk del .build-deps
+
+ARG TZ='UTC'
+ENV TZ=$TZ
 
 #These params meant to be set by CI
 ARG BUILD_DATE=Undefined

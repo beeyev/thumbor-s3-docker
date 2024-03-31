@@ -32,6 +32,9 @@ jobs:
         beeyev/thumbor-s3:${{ matrix.baseDist }}
         beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
         beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
+        quay.io/beeyev/thumbor-s3:${{ matrix.baseDist }}
+        quay.io/beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
+        quay.io/beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
       DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/${{ matrix.baseDist }}.Dockerfile
       PLATFORMS: linux/amd64,linux/arm64
     secrets: inherit
