@@ -1,10 +1,8 @@
 # syntax=docker/dockerfile:1
 # Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
-# Full-featured Thumbor docker image
-# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-alpine --file ./docker/thumbor-7.7/Dockerfile-alpine ./ && docker run -it --rm thumbor-alpine
-FROM python:3.11-alpine
-
-LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
+# Slim Thumbor docker image
+# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.7/slim-alpine.Dockerfile ./ && docker run -it --rm thumbor-slim-alpine
+FROM python:3.12-alpine
 
 ENV TERM="xterm-256color" \
 LANGUAGE="en_US.UTF-8" \
@@ -40,42 +38,27 @@ RUN set -eux \
     && pip install --quiet --no-cache-dir --upgrade pip \
     && pip install --quiet --no-cache-dir \
         # Jinja2 and envtpl are required to work with environtment variables
-        Jinja2==3.0.* envtpl==0.6.* \
+        Jinja2==3.1.* envtpl==0.7.* \
+        # sentry is required for error tracking
+        "sentry-sdk==1.*,>=1.39.1" \
+        # numpy - https://github.com/beeyev/thumbor-s3-docker/pull/14
+        "numpy==1.*,>=1.26.3" \
+        # avif and heif support
+        "pillow-avif-plugin==1.*,>=1.4.1" \
+        "pillow-heif==0.*,>=0.14.0" \
         # pycurl is required for thumbor
-        pycurl==7.* thumbor==7.7.* thumbor-aws==0.6.* tc_prometheus==2.* \
-        "numpy==1.*,<1.24.0" \
+        "pycurl==7.*,>=7.45.2" thumbor==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
     && thumbor --version && envtpl --help \
-    #
+    ##
     ## Optional extensions
-    #
+    ##
     ## `gifsicle` is a Thumbor requirement for better processing of GIF images
     && apk add --quiet --no-cache gifsicle \
-    #
-    ## `ffmpeg` is used by Thumbor for rendering animated images as GIFV
-    && apk add --quiet --no-cache ffmpeg \
-    #
-    ## cairosvg is for reading SVG files.
-    && apk add --quiet --no-cache cairo \
-    && apk add --quiet --no-cache --virtual .build-deps-cairosvg libffi-dev \
-    && pip install --quiet --no-cache-dir cairosvg==2.5.* \
-    && apk del .build-deps-cairosvg \
-    #
-    ## py3exiv2 is required for working with EXIF metadata
-    && apk add --quiet --no-cache exiv2 boost-dev \
-    && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev build-base \
-    && pip install --quiet --no-cache-dir py3exiv2==0.11.* \
-    && apk del .build-deps-py3exiv2 \
-    #
     # Cleanup
     && apk del .build-deps
 
-#RUN set -eux \
-#    ## py3exiv2 is required for working with EXIF metadata
-#    && apk add --quiet --no-cache exiv2 boost-dev \
-#    && apk add --quiet --no-cache --virtual .build-deps-py3exiv2 exiv2-dev build-base \
-#    && pip install --quiet --no-cache-dir py3exiv2==0.11.* \
-#    && apk del .build-deps-py3exiv2
-
+ARG TZ='UTC'
+ENV TZ=$TZ
 
 #These params meant to be set by CI
 ARG BUILD_DATE=Undefined
@@ -96,9 +79,7 @@ RUN set -eux \
     # /data/ dir is used by thumbor
     && mkdir /data/ \
     && mkdir /docker-entrypoint.init.d/ \
-    && thumbor --version \
-    # Running `thumbor-doctor` to smoke test functionality
-    && thumbor-doctor
+    && thumbor --version
 
 # Enable nobody user
 #RUN set -eux \

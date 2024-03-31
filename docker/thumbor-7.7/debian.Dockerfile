@@ -1,10 +1,8 @@
 # syntax=docker/dockerfile:1
 # Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
-# Slim Thumbor docker image
-# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.7/Dockerfile-slim-alpine ./ && docker run -it --rm thumbor-slim-alpine
-FROM python:3.11-alpine
-
-LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
+# Full-featured Thumbor docker image
+# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-all-debian --file ./docker/thumbor-7.7/debian.Dockerfile ./ && docker run -it --rm thumbor-all-debian
+FROM python:3.12-slim-bullseye
 
 ENV TERM="xterm-256color" \
 LANGUAGE="en_US.UTF-8" \
@@ -21,43 +19,46 @@ ENV OPTIMIZERS="['thumbor.optimizers.jpegtran']"
 WORKDIR /app/
 
 RUN set -eux \
-    && apk update \
-    && apk add --quiet --no-cache \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y \
         bash \
         tzdata \
         nano \
+        iputils-ping \
         curl \
-        iputils \
         tini \
-        # jpegtran (libjpeg-turbo-utils) is a Thumbor requirement for optimizing JPEG images
-        libjpeg-turbo-utils
+        ## jpegtran (libjpeg-turbo-progs) is for optimizing JPEG images
+        libjpeg-turbo-progs \
+        ## `ffmpeg` is for rendering animated images as GIFV
+        ffmpeg \
+        ## `gifsicle` is for better processing of GIF images
+        gifsicle \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN set -eux \
-    && apk add --quiet --no-cache --virtual .build-deps \
-    # thumbor requirements:
-    curl-dev g++ \
     # Thumbor
     && pip install --quiet --no-cache-dir --upgrade pip \
     && pip install --quiet --no-cache-dir \
         # Jinja2 and envtpl are required to work with environtment variables
-        Jinja2==3.0.* envtpl==0.6.* \
-        # pycurl is required for thumbor
-        pycurl==7.* thumbor==7.7.* thumbor-aws==0.6.* tc_prometheus==2.* \
-        "numpy==1.*,<1.24.0" \
-    && thumbor --version && envtpl --help \
-    ##
-    ## Optional extensions
-    ##
-    ## `gifsicle` is a Thumbor requirement for better processing of GIF images
-    && apk add --quiet --no-cache gifsicle \
-    # Cleanup
-    && apk del .build-deps
+        Jinja2==3.1.* envtpl==0.7.* \
+        # sentry is required for error tracking
+        "sentry-sdk==1.*,>=1.39.1" \
+        # Queued Redis Detector
+        "redis==5.*,>=5.0.1" \
+        # remotecv is required for queued OpenCV processing
+        "remotecv==5.*,>=5.1.8"  \
+        # thumbor
+        thumbor[all]==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
+        && thumbor --version && envtpl --help
+
+ARG TZ='UTC'
+ENV TZ=$TZ
 
 #These params meant to be set by CI
-ARG BUILD_DATE=Undefined
+ARG BUILD_DATE=undefined
 ENV BUILD_DATE=$BUILD_DATE
 RUN echo $BUILD_DATE
-ARG BUILD_FINGERPRINT=Undefined
+ARG BUILD_FINGERPRINT=undefined
 ENV BUILD_FINGERPRINT=$BUILD_FINGERPRINT
 RUN echo $BUILD_FINGERPRINT
 
@@ -72,12 +73,8 @@ RUN set -eux \
     # /data/ dir is used by thumbor
     && mkdir /data/ \
     && mkdir /docker-entrypoint.init.d/ \
-    && thumbor --version
-
-# Enable nobody user
-#RUN set -eux \
-#    && chown -R nobody:nogroup /usr/local/etc/ /data/ /docker-entrypoint.init.d/
-#USER nobody
+    # Running `thumbor-doctor` to smoke test functionality
+    && thumbor-doctor
 
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 CMD ["thumbor"]

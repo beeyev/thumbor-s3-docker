@@ -185,6 +185,7 @@ RESULT_STORAGE = '{{ RESULT_STORAGE | default('thumbor.result_storages.file_stor
 
 ## The imaging engine thumbor should use to perform image operations. This must
 ## be the full name of a python module (python must be able to import it)
+## Possible values: 'thumbor.engines.pil', 'thumbor.engines.opencv'
 ## Defaults to: 'thumbor.engines.pil'
 ENGINE = '{{ ENGINE | default('thumbor.engines.pil') }}'
 
@@ -721,6 +722,7 @@ AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH | default('') }}'
 
 
 ################################# AWS Storage ##################################
+# Documentation: https://github.com/thumbor/thumbor-aws#storage
 
 ## Region where thumbor's objects are going to be stored.
 ## Defaults to: 'us-east-1'
@@ -759,6 +761,7 @@ AWS_DEFAULT_LOCATION = '{{ AWS_DEFAULT_LOCATION | default('https://{bucket_name}
 
 
 ############################## AWS Result Storage ##############################
+# Documentation: https://github.com/thumbor/thumbor-aws#result-storage
 
 ## Region where thumbor's objects are going to be stored.
 ## Defaults to: 'us-east-1'

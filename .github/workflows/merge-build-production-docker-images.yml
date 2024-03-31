@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        baseDist: [ 'slim-alpine', 'alpine' ]
+        baseDist: [ 'slim-alpine', 'debian' ]
         versionMinor: [ '7.7' ]
         versionMajor: [ '7' ]
     name: Build Production Docker Images / ${{ matrix.versionMinor }}-${{ matrix.baseDist }}
@@ -32,12 +32,15 @@ jobs:
         beeyev/thumbor-s3:${{ matrix.baseDist }}
         beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
         beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
-      DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/Dockerfile-${{ matrix.baseDist }}
+        quay.io/beeyev/thumbor-s3:${{ matrix.baseDist }}
+        quay.io/beeyev/thumbor-s3:${{ matrix.versionMinor }}-${{ matrix.baseDist }}
+        quay.io/beeyev/thumbor-s3:${{ matrix.versionMajor }}-${{ matrix.baseDist }}
+      DOCKERFILE_PATH: ./docker/thumbor-${{ matrix.versionMinor }}/${{ matrix.baseDist }}.Dockerfile
       PLATFORMS: linux/amd64,linux/arm64
     secrets: inherit
 
   update-docker-hub-repo-description:
-    name: Update Docker Hub repo description
+    name: Update Docker repo description
     runs-on: ubuntu-latest
     needs: docker-image-deploy
     steps:
