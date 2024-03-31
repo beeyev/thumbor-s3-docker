@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
 # Full-featured Thumbor docker image
-# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-all-debian --file ./docker/thumbor-7.7/full-functionality-debian.dockerfile ./ && docker run -it --rm thumbor-all-debian
+# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-all-debian --file ./docker/thumbor-7.7/full-functionality-debian.Dockerfile ./ && docker run -it --rm thumbor-all-debian
 FROM python:3.12-slim-bullseye
 
 ENV TERM="xterm-256color" \

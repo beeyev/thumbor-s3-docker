@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Alexander Tebiev - https://github.com/beeyev/thumbor-s3-docker
 # Slim Thumbor docker image
-# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.7/Dockerfile-slim-alpine ./ && docker run -it --rm thumbor-slim-alpine
+# docker buildx build --cache-to=type=inline --build-arg=BUILD_DATE=0000 --build-arg=BUILD_FINGERPRINT=0000 --pull --tag thumbor-slim-alpine --file ./docker/thumbor-7.7/slim-alpine.Dockerfile ./ && docker run -it --rm thumbor-slim-alpine
 FROM python:3.12-alpine
 
 LABEL org.opencontainers.image.source=https://github.com/beeyev/thumbor-s3-docker
