@@ -12,7 +12,6 @@ Thumbor S3 Docker is available in two variants of docker images, a lightweight (
  - [`gifsicle`](https://thumbor.readthedocs.io/en/stable/configuration.html?highlight=gifsicle#use-gifsicle-engine) allows to generate proper animated gifs, as well as static gifs with the smallest possible size.
  - [`thumbor-aws`](https://github.com/thumbor/thumbor-aws) Official extension for asynchronous non-blocking AWS S3 support.  
  - [`sentry-client`](https://thumbor.readthedocs.io/en/latest/custom_error_handling.html) Sentry error handling client.  
- - High Efficiency Image Format `avif`, `heif` support.
  - Support for Prometheus metrics collector.
  - Healthcheck inside the docker container is already configured, it controls that Thumbor service works properly.
 
@@ -21,7 +20,8 @@ Thumbor S3 Docker is available in two variants of docker images, a lightweight (
  - [Facial Detection](https://thumbor.readthedocs.io/en/latest/detection_algorithms.html) support.
  - Ability to process SVG, AVIF and HEIF files.
  - [Lazy Detection](https://thumbor.readthedocs.io/en/latest/lazy_detection.html) functionality.
- - [`Image Metadata`](https://thumbor.readthedocs.io/en/stable/metadata.html) allows to work with image's metadata.
+ - [`Image Metadata`](https://thumbor.readthedocs.io/en/stable/metadata.html) allows to work with image's metadata.  
+- High Efficiency Image Format `avif`, `heif` support.  
 
 > Before choosing the full-featured image version, make sure that you really need this extra functionality, as the resulting Docker container is three times larger than `slim-alpine`.
 
