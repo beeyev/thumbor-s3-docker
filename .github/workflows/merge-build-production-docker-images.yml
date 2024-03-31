@@ -54,12 +54,3 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: beeyev/thumbor-s3
           #short-description: ${{ github.event.repository.description }}
-
-      - name: Update Quay.io description
-        uses: christian-korneck/update-container-description-action@v1
-        env:
-          DOCKER_APIKEY: ${{ secrets.QUAY_TOKEN }}
-        with:
-          destination_container_repo: quay.io/beeyev/thumbor-s3
-          provider: quay
-          readme_file: 'README.md'
