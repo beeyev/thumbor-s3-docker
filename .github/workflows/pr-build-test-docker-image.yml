@@ -33,6 +33,9 @@ jobs:
           message: |
             > [Building test docker images...](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
+      - name: Checkout branch - ${{ github.head_ref || github.ref_name }}
+        uses: actions/checkout@v4
+
       - name: Update Quay.io description
         uses: christian-korneck/update-container-description-action@v1
         env:
