@@ -41,11 +41,15 @@ RUN set -eux \
     && pip install --quiet --no-cache-dir \
         # Jinja2 and envtpl are required to work with environtment variables
         Jinja2==3.1.* envtpl==0.7.* \
-        # pycurl is required for thumbor
-        "pycurl==7.*,>=7.45.2" thumbor==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
-        "numpy==1.*,>=1.26.3" \
         # sentry is required for error tracking
         "sentry-sdk==1.*,>=1.39.1" \
+        # numpy - https://github.com/beeyev/thumbor-s3-docker/pull/14
+        "numpy==1.*,>=1.26.3" \
+        # avif and heif support
+        "pillow-avif-plugin==1.*,>=1.4.1" \
+        "pillow-heif==0.*,>=0.14.0" \
+        # pycurl is required for thumbor
+        "pycurl==7.*,>=7.45.2" thumbor==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
     && thumbor --version && envtpl --help \
     ##
     ## Optional extensions

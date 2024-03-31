@@ -4,29 +4,32 @@
 <p align="center"><a href="https://github.com/beeyev/thumbor-s3-docker"><img src="https://github.com/beeyev/thumbor-s3-docker/raw/master/docs/img/thumbor-s3-docker.jpg"></a></p>
 
 ## A little of introduction
-Thumbor S3 Docker is available in two variants of docker images, a lightweight (slim) - `slim-alpine` and a full-featured  - `alpine`.
+Thumbor S3 Docker is available in two variants of docker images, a lightweight (slim) - `slim-alpine` and a full-featured  - `debian`.
 
 ### All current docker images are packed with these features:
  - AWS S3 / Minio integration support
  - [`jpegtran`](https://thumbor.readthedocs.io/en/stable/jpegtran.html?highlight=Jpegtran#jpegtran) (already enabled) lossless jpeg optimizer which can make jpegs smaller by optimizing DCT coefficients.
  - [`gifsicle`](https://thumbor.readthedocs.io/en/stable/configuration.html?highlight=gifsicle#use-gifsicle-engine) allows to generate proper animated gifs, as well as static gifs with the smallest possible size.
  - [`thumbor-aws`](https://github.com/thumbor/thumbor-aws) Official extension for asynchronous non-blocking AWS S3 support.  
+ - [`sentry-client`](https://thumbor.readthedocs.io/en/latest/custom_error_handling.html) Sentry error handling client.  
  - Support for Prometheus metrics collector.
  - Healthcheck inside the docker container is already configured, it controls that Thumbor service works properly.
 
-### The full-featured (`alpine`) version contains these extra functionality:  
+### The full-featured (`debian`) version provides all possible functionality such as:  
  - [`gifv`](https://thumbor.readthedocs.io/en/stable/gifv.html) optimizer which is able to convert gifs to mp4 or webm videos, often resulting in dramatically smaller sized files.
- - Ability to process SVG files.
+ - [Facial Detection](https://thumbor.readthedocs.io/en/latest/detection_algorithms.html) support.
+ - Ability to process SVG, AVIF and HEIF files.
+ - [Lazy Detection](https://thumbor.readthedocs.io/en/latest/lazy_detection.html) functionality.
  - [`Image Metadata`](https://thumbor.readthedocs.io/en/stable/metadata.html) allows to work with image's metadata.
 
-> Before choosing the full-featured image version, make sure that you really need these extra functionality, since the resulting docker container is two times bigger than `slim-alpine`
+> Before choosing the full-featured image version, make sure that you really need this extra functionality, as the resulting Docker container is three times larger than `slim-alpine`.
 
 ### Currently maintained docker images:  
-`thumbor-s3:alpine`  
+`thumbor-s3:debian`  
 `thumbor-s3:slim-alpine`  
-`thumbor-s3:7-alpine`  
+`thumbor-s3:7-debian`  
 `thumbor-s3:7-slim-alpine`  
-`thumbor-s3:7.7-alpine`  
+`thumbor-s3:7.7-debian`  
 `thumbor-s3:7.7-slim-alpine`
   
 [Docker Hub](https://hub.docker.com/r/beeyev/thumbor-s3) | [Github packages](https://github.com/beeyev/thumbor-s3-docker/pkgs/container/thumbor-s3)  
