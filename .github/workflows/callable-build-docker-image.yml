@@ -57,7 +57,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build image and push to registry - ${{ inputs.DOCKER_REGISTRY_IMAGE }}
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           platforms: ${{ inputs.PLATFORMS }}
           context: .
