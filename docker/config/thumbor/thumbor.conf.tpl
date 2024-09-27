@@ -917,8 +917,10 @@ AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL }}'
 {% endif %}
 
 ## Loader prefix path.
-## Defaults to: ''
-AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH | default('') }}'
+## Defaults to: '/st'
+{% if AWS_LOADER_ROOT_PATH is defined %}
+AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH }}'
+{% endif %}
 
 ################################################################################
 
@@ -928,36 +930,52 @@ AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH | default('') }}'
 
 ## Region where thumbor's objects are going to be stored.
 ## Defaults to: 'us-east-1'
-AWS_STORAGE_REGION_NAME = '{{ AWS_STORAGE_REGION_NAME | default('us-east-1') }}'
+{% if AWS_STORAGE_REGION_NAME is defined %}
+AWS_STORAGE_REGION_NAME = '{{ AWS_STORAGE_REGION_NAME }}'
+{% endif %}
 
 ## S3 Bucket where thumbor's objects are going to be stored.
 ## Defaults to: 'thumbor'
-AWS_STORAGE_BUCKET_NAME = '{{ AWS_STORAGE_BUCKET_NAME | default('thumbor') }}'
+{% if AWS_STORAGE_BUCKET_NAME is defined %}
+AWS_STORAGE_BUCKET_NAME = '{{ AWS_STORAGE_BUCKET_NAME }}'
+{% endif %}
 
 ## Secret access key for S3 to allow thumbor to store objects there.
 ## Defaults to: None
-AWS_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_STORAGE_S3_SECRET_ACCESS_KEY | default(None) }}'
+{% if AWS_STORAGE_S3_SECRET_ACCESS_KEY is defined %}
+AWS_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_STORAGE_S3_SECRET_ACCESS_KEY }}'
+{% endif %}
 
 ## Access key ID for S3 to allow thumbor to store objects there.
 ## Defaults to: None
-AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID | default(None) }}'
+{% if AWS_STORAGE_S3_ACCESS_KEY_ID is defined %}
+AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID }}'
+{% endif %}
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: None
-AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL | default(None) }}'
+{% if AWS_STORAGE_S3_ENDPOINT_URL is defined %}
+AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL }}'
+{% endif %}
 
 ## Storage prefix path.
 ## Defaults to: ''
-AWS_STORAGE_ROOT_PATH = '{{ AWS_STORAGE_ROOT_PATH | default('') }}'
+{% if AWS_STORAGE_ROOT_PATH is defined %}
+AWS_STORAGE_ROOT_PATH = '{{ AWS_STORAGE_ROOT_PATH }}'
+{% endif %}
 
 ## Storage ACL for files written in bucket
 ## Defaults to: 'public-read'
-AWS_STORAGE_S3_ACL = '{{ AWS_STORAGE_S3_ACL | default('public-read') }}'
+{% if AWS_STORAGE_S3_ACL is defined %}
+AWS_STORAGE_S3_ACL = '{{ AWS_STORAGE_S3_ACL }}'
+{% endif %}
 
 ## Default location to use if S3 does not return location header. Can use
 ## {bucket_name} var.
 ## Defaults to: 'https://{bucket_name}.s3.amazonaws.com'
-AWS_DEFAULT_LOCATION = '{{ AWS_DEFAULT_LOCATION | default('https://{bucket_name}.s3.amazonaws.com') }}'
+{% if AWS_DEFAULT_LOCATION is defined %}
+AWS_DEFAULT_LOCATION = '{{ AWS_DEFAULT_LOCATION }}'
+{% endif %}
 
 ################################################################################
 
