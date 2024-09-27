@@ -854,12 +854,16 @@ SENTRY_ENVIRONMENT = '{{ SENTRY_ENVIRONMENT }}'
 ## The amount of time to wait before shutting down the server, i.e. stop
 ## accepting requests.
 ## Defaults to: 0
-MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN = {{ MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN | default(0) }}
+{% if MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN is defined %}
+MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN = {{ MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN }}
+{% endif %}
 
 ## The amount of time to waut before shutting down all io, after the server has
 ## been stopped
 ## Defaults to: 0
-MAX_WAIT_SECONDS_BEFORE_IO_SHUTDOWN = {{ MAX_WAIT_SECONDS_BEFORE_IO_SHUTDOWN | default(0) }}
+{% if MAX_WAIT_SECONDS_BEFORE_IO_SHUTDOWN is defined %}
+MAX_WAIT_SECONDS_BEFORE_IO_SHUTDOWN = {{ MAX_WAIT_SECONDS_BEFORE_IO_SHUTDOWN }}
+{% endif %}
 
 ################################################################################
 
@@ -884,23 +888,33 @@ HANDLER_LISTS = {{ HANDLER_LISTS }}
 
 ## Region where thumbor's objects are going to be loaded from.
 ## Defaults to: 'us-east-1'
-AWS_LOADER_REGION_NAME = '{{ AWS_LOADER_REGION_NAME | default('us-east-1') }}'
+{% if AWS_LOADER_REGION_NAME is defined %}
+AWS_LOADER_REGION_NAME = '{{ AWS_LOADER_REGION_NAME }}'
+{% endif %}
 
 ## S3 Bucket where thumbor's objects are loaded from.
 ## Defaults to: 'thumbor'
-AWS_LOADER_BUCKET_NAME = '{{ AWS_LOADER_BUCKET_NAME | default('thumbor') }}'
+{% if AWS_LOADER_BUCKET_NAME is defined %}
+AWS_LOADER_BUCKET_NAME = '{{ AWS_LOADER_BUCKET_NAME }}'
+{% endif %}
 
 ## Secret access key for S3 Loader.
 ## Defaults to: None
-AWS_LOADER_S3_SECRET_ACCESS_KEY = '{{ AWS_LOADER_S3_SECRET_ACCESS_KEY | default(None) }}'
+{% if AWS_LOADER_S3_SECRET_ACCESS_KEY is defined %}
+AWS_LOADER_S3_SECRET_ACCESS_KEY = '{{ AWS_LOADER_S3_SECRET_ACCESS_KEY }}'
+{% endif %}
 
 ## Access key ID for S3 Loader.
 ## Defaults to: None
-AWS_LOADER_S3_ACCESS_KEY_ID = '{{ AWS_LOADER_S3_ACCESS_KEY_ID | default(None) }}'
+{% if AWS_LOADER_S3_ACCESS_KEY_ID is defined %}
+AWS_LOADER_S3_ACCESS_KEY_ID = '{{ AWS_LOADER_S3_ACCESS_KEY_ID }}'
+{% endif %}
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: None
-AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL | default(None) }}'
+{% if AWS_LOADER_S3_ENDPOINT_URL is defined %}
+AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL }}'
+{% endif %}
 
 ## Loader prefix path.
 ## Defaults to: ''
