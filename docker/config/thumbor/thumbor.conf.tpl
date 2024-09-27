@@ -541,31 +541,43 @@ FILE_STORAGE_ROOT_PATH = '{{ FILE_STORAGE_ROOT_PATH | default('/data/storage') }
 ## Max size in bytes for images uploaded to thumbor
 ## Aliases: MAX_SIZE
 ## Defaults to: 0
-UPLOAD_MAX_SIZE = {{ UPLOAD_MAX_SIZE | default(0) }}
+{% if UPLOAD_MAX_SIZE is defined %}
+UPLOAD_MAX_SIZE = {{ UPLOAD_MAX_SIZE }}
+{% endif %}
 
 ## Indicates whether thumbor should enable File uploads
 ## Aliases: ENABLE_ORIGINAL_PHOTO_UPLOAD
 ## Defaults to: False
-UPLOAD_ENABLED = {{ UPLOAD_ENABLED | default(False) }}
+{% if UPLOAD_ENABLED is defined %}
+UPLOAD_ENABLED = {{ UPLOAD_ENABLED }}
+{% endif %}
 
 ## The type of storage to store uploaded images with
 ## Aliases: ORIGINAL_PHOTO_STORAGE
 ## Defaults to: 'thumbor.storages.file_storage'
-UPLOAD_PHOTO_STORAGE = '{{ UPLOAD_PHOTO_STORAGE | default('thumbor.storages.file_storage') }}'
+{% if UPLOAD_PHOTO_STORAGE is defined %}
+UPLOAD_PHOTO_STORAGE = '{{ UPLOAD_PHOTO_STORAGE }}'
+{% endif %}
 
 ## Indicates whether image deletion should be allowed
 ## Aliases: ALLOW_ORIGINAL_PHOTO_DELETION
 ## Defaults to: False
-UPLOAD_DELETE_ALLOWED = {{ UPLOAD_DELETE_ALLOWED | default(False) }}
+{% if UPLOAD_DELETE_ALLOWED is defined %}
+UPLOAD_DELETE_ALLOWED = {{ UPLOAD_DELETE_ALLOWED }}
+{% endif %}
 
 ## Indicates whether image overwrite should be allowed
 ## Aliases: ALLOW_ORIGINAL_PHOTO_PUTTING
 ## Defaults to: False
-UPLOAD_PUT_ALLOWED = {{ UPLOAD_PUT_ALLOWED | default(False) }}
+{% if UPLOAD_PUT_ALLOWED is defined %}
+UPLOAD_PUT_ALLOWED = {{ UPLOAD_PUT_ALLOWED }}
+{% endif %}
 
 ## Default filename for image uploaded
 ## Defaults to: 'image'
-UPLOAD_DEFAULT_FILENAME = '{{ UPLOAD_DEFAULT_FILENAME | default('image') }}'
+{% if UPLOAD_DEFAULT_FILENAME is defined %}
+UPLOAD_DEFAULT_FILENAME = '{{ UPLOAD_DEFAULT_FILENAME }}'
+{% endif %}
 
 ################################################################################
 
@@ -575,17 +587,23 @@ UPLOAD_DEFAULT_FILENAME = '{{ UPLOAD_DEFAULT_FILENAME | default('image') }}'
 ## Mixed Storage file storage. This must be the full name of a python module
 ## (python must be able to import it)
 ## Defaults to: 'thumbor.storages.no_storage'
-MIXED_STORAGE_FILE_STORAGE = '{{ MIXED_STORAGE_FILE_STORAGE | default('thumbor.storages.no_storage') }}'
+{% if MIXED_STORAGE_FILE_STORAGE is defined %}
+MIXED_STORAGE_FILE_STORAGE = '{{ MIXED_STORAGE_FILE_STORAGE }}'
+{% endif %}
 
 ## Mixed Storage signing key storage. This must be the full name of a python
 ## module (python must be able to import it)
 ## Defaults to: 'thumbor.storages.no_storage'
-MIXED_STORAGE_CRYPTO_STORAGE = '{{ MIXED_STORAGE_CRYPTO_STORAGE | default('thumbor.storages.no_storage') }}'
+{% if MIXED_STORAGE_CRYPTO_STORAGE is defined %}
+MIXED_STORAGE_CRYPTO_STORAGE = '{{ MIXED_STORAGE_CRYPTO_STORAGE }}'
+{% endif %}
 
 ## Mixed Storage detector information storage. This must be the full name of a
 ## python module (python must be able to import it)
 ## Defaults to: 'thumbor.storages.no_storage'
-MIXED_STORAGE_DETECTOR_STORAGE = '{{ MIXED_STORAGE_DETECTOR_STORAGE | default('thumbor.storages.no_storage') }}'
+{% if MIXED_STORAGE_DETECTOR_STORAGE is defined %}
+MIXED_STORAGE_DETECTOR_STORAGE = '{{ MIXED_STORAGE_DETECTOR_STORAGE }}'
+{% endif %}
 
 ################################################################################
 
@@ -595,7 +613,9 @@ MIXED_STORAGE_DETECTOR_STORAGE = '{{ MIXED_STORAGE_DETECTOR_STORAGE | default('t
 ## The callback function name that should be used by the META route for JSONP
 ## access
 ## Defaults to: None
-META_CALLBACK_NAME = {{ META_CALLBACK_NAME | default(None) }}
+{% if META_CALLBACK_NAME is defined %}
+META_CALLBACK_NAME = '{{ META_CALLBACK_NAME }}'
+{% endif %}
 
 ################################################################################
 
@@ -613,19 +633,27 @@ META_CALLBACK_NAME = {{ META_CALLBACK_NAME | default(None) }}
 #'thumbor.detectors.feature_detector',
 #'thumbor.detectors.face_detector',
 #]
-DETECTORS = {{ DETECTORS | default([]) }}
+{% if DETECTORS is defined %}
+DETECTORS = {{ DETECTORS }}
+{% endif %}
 
 ## The cascade file that opencv will use to detect faces.
 ## Defaults to: 'haarcascade_frontalface_alt.xml'
-FACE_DETECTOR_CASCADE_FILE = '{{ FACE_DETECTOR_CASCADE_FILE | default('haarcascade_frontalface_alt.xml') }}'
+{% if FACE_DETECTOR_CASCADE_FILE is defined %}
+FACE_DETECTOR_CASCADE_FILE = '{{ FACE_DETECTOR_CASCADE_FILE }}'
+{% endif %}
 
 ## The cascade file that opencv will use to detect glasses.
 ## Defaults to: 'haarcascade_eye_tree_eyeglasses.xml'
-GLASSES_DETECTOR_CASCADE_FILE = '{{ GLASSES_DETECTOR_CASCADE_FILE | default('haarcascade_eye_tree_eyeglasses.xml') }}'
+{% if GLASSES_DETECTOR_CASCADE_FILE is defined %}
+GLASSES_DETECTOR_CASCADE_FILE = '{{ GLASSES_DETECTOR_CASCADE_FILE }}'
+{% endif %}
 
 ## The cascade file that opencv will use to detect profile faces.
 ## Defaults to: 'haarcascade_profileface.xml'
-PROFILE_DETECTOR_CASCADE_FILE = '{{ PROFILE_DETECTOR_CASCADE_FILE | default('haarcascade_profileface.xml') }}'
+{% if PROFILE_DETECTOR_CASCADE_FILE is defined %}
+PROFILE_DETECTOR_CASCADE_FILE = '{{ PROFILE_DETECTOR_CASCADE_FILE }}'
+{% endif %}
 
 ################################################################################
 
@@ -634,8 +662,9 @@ PROFILE_DETECTOR_CASCADE_FILE = '{{ PROFILE_DETECTOR_CASCADE_FILE | default('haa
 
 ## List of optimizers that thumbor will use to optimize images
 ## Defaults to: [] --> ['thumbor.optimizers.jpegtran',]
-OPTIMIZERS = {{ OPTIMIZERS | default([]) }}
-
+{% if OPTIMIZERS is defined %}
+OPTIMIZERS = {{ OPTIMIZERS }}
+{% endif %}
 
 ## Path for the jpegtran binary
 ## Defaults to: '/usr/bin/jpegtran'
@@ -644,7 +673,9 @@ JPEGTRAN_PATH = '{{ JPEGTRAN_PATH | default('/usr/bin/jpegtran') }}'
 ## Path for the progressive scans file to use with jpegtran optimizer. Implies
 ## progressive jpeg output
 ## Defaults to: ''
-JPEGTRAN_SCANS_FILE = '{{ JPEGTRAN_SCANS_FILE | default('') }}'
+{% if JPEGTRAN_SCANS_FILE is defined %}
+JPEGTRAN_SCANS_FILE = '{{ JPEGTRAN_SCANS_FILE }}'
+{% endif %}
 
 ## Path for the ffmpeg binary used to generate gifv(h.264)
 ## Defaults to: '/usr/local/bin/ffmpeg'
@@ -702,7 +733,9 @@ FILTERS = {{ FILTERS }}
 
 ## Expiration in seconds of generated images in the result storage
 ## Defaults to: 0
-RESULT_STORAGE_EXPIRATION_SECONDS = {{ RESULT_STORAGE_EXPIRATION_SECONDS | default(0) }}
+{% if RESULT_STORAGE_EXPIRATION_SECONDS is defined %}
+RESULT_STORAGE_EXPIRATION_SECONDS = {{ RESULT_STORAGE_EXPIRATION_SECONDS }}
+{% endif %}
 
 ## Path where the Result storage will store generated images
 ## Defaults to: '/tmp/thumbor/result_storage'
@@ -710,7 +743,9 @@ RESULT_STORAGE_FILE_STORAGE_ROOT_PATH = '{{ RESULT_STORAGE_FILE_STORAGE_ROOT_PAT
 
 ## Indicates whether unsafe requests should also be stored in the Result Storage
 ## Defaults to: False
-RESULT_STORAGE_STORES_UNSAFE = {{ RESULT_STORAGE_STORES_UNSAFE | default(False) }}
+{% if RESULT_STORAGE_STORES_UNSAFE is defined %}
+RESULT_STORAGE_STORES_UNSAFE = {{ RESULT_STORAGE_STORES_UNSAFE }}
+{% endif %}
 
 ################################################################################
 
@@ -723,15 +758,21 @@ REDIS_QUEUE_SERVER_HOST = '{{ REDIS_QUEUE_SERVER_HOST | default('redis') }}'
 
 ## Server port for the queued redis detector
 ## Defaults to: 6379
-REDIS_QUEUE_SERVER_PORT = {{ REDIS_QUEUE_SERVER_PORT | default(6379) }}
+{% if REDIS_QUEUE_SERVER_PORT is defined %}
+REDIS_QUEUE_SERVER_PORT = {{ REDIS_QUEUE_SERVER_PORT }}
+{% endif %}
 
 ## Server database index for the queued redis detector
 ## Defaults to: 0
-REDIS_QUEUE_SERVER_DB = {{ REDIS_QUEUE_SERVER_DB | default(0) }}
+{% if REDIS_QUEUE_SERVER_DB is defined %}
+REDIS_QUEUE_SERVER_DB = {{ REDIS_QUEUE_SERVER_DB }}
+{% endif %}
 
 ## Server password for the queued redis detector
 ## Defaults to: None
-REDIS_QUEUE_SERVER_PASSWORD = {{ REDIS_QUEUE_SERVER_PASSWORD | default(None) }}
+{% if REDIS_QUEUE_SERVER_PASSWORD is defined %}
+REDIS_QUEUE_SERVER_PASSWORD = '{{ REDIS_QUEUE_SERVER_PASSWORD }}'
+{% endif %}
 
 ################################################################################
 
@@ -740,15 +781,21 @@ REDIS_QUEUE_SERVER_PASSWORD = {{ REDIS_QUEUE_SERVER_PASSWORD | default(None) }}
 
 ## AWS key id
 ## Defaults to: None
-SQS_QUEUE_KEY_ID = {{ SQS_QUEUE_KEY_ID | default(None) }}
+{% if SQS_QUEUE_KEY_ID is defined %}
+SQS_QUEUE_KEY_ID = '{{ SQS_QUEUE_KEY_ID }}'
+{% endif %}
 
 ## AWS key secret
 ## Defaults to: None
-SQS_QUEUE_KEY_SECRET = {{ SQS_QUEUE_KEY_SECRET | default(None) }}
+{% if SQS_QUEUE_KEY_SECRET is defined %}
+SQS_QUEUE_KEY_SECRET = '{{ SQS_QUEUE_KEY_SECRET }}'
+{% endif %}
 
 ## AWS SQS region
 ## Defaults to: 'us-east-1'
-SQS_QUEUE_REGION = '{{ SQS_QUEUE_REGION | default('us-east-1') }}'
+{% if SQS_QUEUE_REGION is defined %}
+SQS_QUEUE_REGION = '{{ SQS_QUEUE_REGION }}'
+{% endif %}
 
 ################################################################################
 
@@ -758,20 +805,28 @@ SQS_QUEUE_REGION = '{{ SQS_QUEUE_REGION | default('us-east-1') }}'
 ## This configuration indicates whether thumbor should use a custom error
 ## handler.
 ## Defaults to: False
-USE_CUSTOM_ERROR_HANDLING = {{ USE_CUSTOM_ERROR_HANDLING | default(False) }}
+{% if USE_CUSTOM_ERROR_HANDLING is defined %}
+USE_CUSTOM_ERROR_HANDLING = {{ USE_CUSTOM_ERROR_HANDLING }}
+{% endif %}
 
 ## Error reporting module. Needs to contain a class called ErrorHandler with a
 ## handle_error(context, handler, exception) method.
 ## Defaults to: 'thumbor.error_handlers.sentry'
-ERROR_HANDLER_MODULE = '{{ ERROR_HANDLER_MODULE | default('thumbor.error_handlers.sentry') }}'
+{% if ERROR_HANDLER_MODULE is defined %}
+ERROR_HANDLER_MODULE = '{{ ERROR_HANDLER_MODULE }}'
+{% endif %}
 
 ## File of error log as json
 ## Defaults to: None
-ERROR_FILE_LOGGER = {{ ERROR_FILE_LOGGER | default(None) }}
+{% if ERROR_FILE_LOGGER is defined %}
+ERROR_FILE_LOGGER = '{{ ERROR_FILE_LOGGER }}'
+{% endif %}
 
 ## File of error log name is parametrized with context attribute
 ## Defaults to: False
-ERROR_FILE_NAME_USE_CONTEXT = {{ ERROR_FILE_NAME_USE_CONTEXT | default('False') }}
+{% if ERROR_FILE_NAME_USE_CONTEXT is defined %}
+ERROR_FILE_NAME_USE_CONTEXT = {{ ERROR_FILE_NAME_USE_CONTEXT }}
+{% endif %}
 
 ################################################################################
 
@@ -781,11 +836,15 @@ ERROR_FILE_NAME_USE_CONTEXT = {{ ERROR_FILE_NAME_USE_CONTEXT | default('False') 
 ## Sentry thumbor project dsn. i.e.: http://5a63d58ae7b94f1dab3dee740b301d6a:73ee
 ## a45d3e8649239a973087e8f21f98@localhost:9000/2
 ## Defaults to: ''
-SENTRY_DSN_URL = '{{ SENTRY_DSN_URL | default('') }}'
+{% if SENTRY_DSN_URL is defined %}
+SENTRY_DSN_URL = '{{ SENTRY_DSN_URL }}'
+{% endif %}
 
 ## Sentry environment i.e.: staging
 ## Defaults to: None
-SENTRY_ENVIRONMENT = {{ SENTRY_ENVIRONMENT | default(None) }}
+{% if SENTRY_ENVIRONMENT is defined %}
+SENTRY_ENVIRONMENT = '{{ SENTRY_ENVIRONMENT }}'
+{% endif %}
 
 ################################################################################
 
