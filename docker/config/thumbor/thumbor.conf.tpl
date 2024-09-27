@@ -69,46 +69,64 @@ QUALITY = {{ QUALITY }}
 
 ## Exports JPEG images with the progressive flag set.
 ## Defaults to: True
-PROGRESSIVE_JPEG = {{ PROGRESSIVE_JPEG | default(True) }}
+{% if PROGRESSIVE_JPEG is defined %}
+PROGRESSIVE_JPEG = {{ PROGRESSIVE_JPEG }}
+{% endif %}
 
 ## Specify subsampling behavior for Pillow (see `subsampling`               in
-## http://pillow.readthedocs.org/en/latest/handbook/image-file-
-## formats.html#jpeg).Be careful to use int for 0,1,2 and string for "4:4:4"
+## http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html#jpeg).
+## Be careful to use int for 0,1,2 and string for "4:4:4"
 ## notation. Will ignore `quality`. Using `keep` will copy the original file's
 ## subsampling.
 ## Defaults to: None
-PILLOW_JPEG_SUBSAMPLING = {{ PILLOW_JPEG_SUBSAMPLING | default(None) }}
+{% if PILLOW_JPEG_SUBSAMPLING is defined %}
+PILLOW_JPEG_SUBSAMPLING = '{{ PILLOW_JPEG_SUBSAMPLING }}'
+{% endif %}
+
 
 ## Specify quantization tables for Pillow (see `qtables`               in
 ## http://pillow.readthedocs.org/en/latest/handbook/image-file-
 ## formats.html#jpeg). Will ignore `quality`. Using `keep` will copy the
 ## original file's qtables.
 ## Defaults to: None
-PILLOW_JPEG_QTABLES = {{ PILLOW_JPEG_QTABLES | default(None) }}
+{% if PILLOW_JPEG_QTABLES is defined %}
+PILLOW_JPEG_QTABLES = '{{ PILLOW_JPEG_QTABLES }}'
+{% endif %}
+
 
 ## Specify resampling filter for Pillow resize method.One of LANCZOS, NEAREST,
 ## BILINEAR, BICUBIC, HAMMING (Pillow>=3.4.0).
 ## Defaults to: 'LANCZOS'
-PILLOW_RESAMPLING_FILTER = '{{ PILLOW_RESAMPLING_FILTER | default('LANCZOS') }}'
+{% if PILLOW_RESAMPLING_FILTER is defined %}
+PILLOW_RESAMPLING_FILTER = '{{ PILLOW_RESAMPLING_FILTER }}'
+{% endif %}
 
 ## Quality index used for generated WebP images. If not set (None) the same level
 ## of JPEG quality will be used. If 100 the `lossless` flag will be used.
 ## Defaults to: None
-WEBP_QUALITY = {{ WEBP_QUALITY | default(None) }}
+{% if WEBP_QUALITY is defined %}
+WEBP_QUALITY = {{ WEBP_QUALITY }}
+{% endif %}
 
 ## Compression level for generated PNG images.
 ## Defaults to: 6
-PNG_COMPRESSION_LEVEL = {{ PNG_COMPRESSION_LEVEL | default(6) }}
+{% if PNG_COMPRESSION_LEVEL is defined %}
+PNG_COMPRESSION_LEVEL = {{ PNG_COMPRESSION_LEVEL }}
+{% endif %}
 
 ## Indicates if final image should preserve indexed mode (P or 1) of original
 ## image
 ## Defaults to: True
-PILLOW_PRESERVE_INDEXED_MODE = {{ PILLOW_PRESERVE_INDEXED_MODE | default(True) }}
+{% if PILLOW_PRESERVE_INDEXED_MODE is defined %}
+PILLOW_PRESERVE_INDEXED_MODE = {{ PILLOW_PRESERVE_INDEXED_MODE }}
+{% endif %}
 
 ## Specifies whether WebP format should be used automatically if the request
 ## accepts it (via Accept header)
 ## Defaults to: False
-AUTO_WEBP = {{ AUTO_WEBP | default(False) }}
+{% if AUTO_WEBP is defined %}
+AUTO_WEBP = {{ AUTO_WEBP }}
+{% endif %}
 
 ## Specifies whether a PNG image should be used automatically if the png image
 ## has no transparency (via alpha layer). WARNING: Depending on case, this is
