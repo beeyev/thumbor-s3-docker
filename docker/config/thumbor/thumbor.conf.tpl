@@ -985,36 +985,59 @@ AWS_DEFAULT_LOCATION = '{{ AWS_DEFAULT_LOCATION }}'
 
 ## Region where thumbor's objects are going to be stored.
 ## Defaults to: 'us-east-1'
-AWS_RESULT_STORAGE_REGION_NAME = '{{ AWS_RESULT_STORAGE_REGION_NAME | default('us-east-1') }}'
+{% if AWS_RESULT_STORAGE_REGION_NAME is defined %}
+AWS_RESULT_STORAGE_REGION_NAME = '{{ AWS_RESULT_STORAGE_REGION_NAME }}'
+{% endif %}
 
 ## S3 Bucket where thumbor's objects are going to be stored.
 ## Defaults to: 'thumbor'
-AWS_RESULT_STORAGE_BUCKET_NAME = '{{ AWS_RESULT_STORAGE_BUCKET_NAME | default('thumbor') }}'
+{% if AWS_RESULT_STORAGE_BUCKET_NAME is defined %}
+AWS_RESULT_STORAGE_BUCKET_NAME = '{{ AWS_RESULT_STORAGE_BUCKET_NAME }}'
+{% endif %}
 
 ## Secret access key for S3 to allow thumbor to store objects there.
 ## Defaults to: None
-AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY | default(None) }}'
+{% if AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY is defined %}
+AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_RESULT_STORAGE_S3_SECRET_ACCESS_KEY }}'
+{% endif %}
 
 ## Access key ID for S3 to allow thumbor to store objects there.
 ## Defaults to: None
-AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID | default(None) }}'
+{% if AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID is defined %}
+AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_RESULT_STORAGE_S3_ACCESS_KEY_ID }}'
+{% endif %}
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: None
-AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL | default(None) }}'
+{% if AWS_RESULT_STORAGE_S3_ENDPOINT_URL is defined %}
+AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL }}'
+{% endif %}
 
 ## Result Storage prefix path.
 ## Defaults to: '/rs'
-AWS_RESULT_STORAGE_ROOT_PATH = '{{ AWS_RESULT_STORAGE_ROOT_PATH | default('/rs') }}'
+{% if AWS_RESULT_STORAGE_ROOT_PATH is defined %}
+AWS_RESULT_STORAGE_ROOT_PATH = '{{ AWS_RESULT_STORAGE_ROOT_PATH }}'
+{% endif %}
 
 ## ACL to use for storing items in S3.
 ## Defaults to: None
-AWS_RESULT_STORAGE_S3_ACL = '{{ AWS_RESULT_STORAGE_S3_ACL | default(None) }}'
+{% if AWS_RESULT_STORAGE_S3_ACL is defined %}
+AWS_RESULT_STORAGE_S3_ACL = '{{ AWS_RESULT_STORAGE_S3_ACL }}'
+{% endif %}
 
 ################################################################################
 
 ######################### tc_prometheus ########################################
-PROMETHEUS_SCRAPE_PORT = {{ PROMETHEUS_SCRAPE_PORT | default(8000) }} # Port the prometheus client should listen on
+# Documentation: # Documentation: https://github.com/thumbor/thumbor-aws#result-storage
+
+# Port the prometheus client should listen on
+## Defaults to: 8000
+{% if PROMETHEUS_SCRAPE_PORT is defined %}
+PROMETHEUS_SCRAPE_PORT = {{ PROMETHEUS_SCRAPE_PORT }}
+{% endif %}
 
 ##################### Thumbor Community Extensions #############################
-COMMUNITY_EXTENSIONS = {{ COMMUNITY_EXTENSIONS | default([]) }}
+## Defaults to: []
+{% if COMMUNITY_EXTENSIONS is defined %}
+COMMUNITY_EXTENSIONS = {{ COMMUNITY_EXTENSIONS }}
+{% endif %}
