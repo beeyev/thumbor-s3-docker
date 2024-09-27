@@ -136,64 +136,87 @@ AUTO_WEBP = {{ AUTO_WEBP }}
 ## maybe will be bigger. You have to evaluate the majority of your use cases
 ## to take a decision about the usage of this conf.
 ## Defaults to: False
-AUTO_PNG_TO_JPG = {{ AUTO_PNG_TO_JPG | default(False) }}
+{% if AUTO_PNG_TO_JPG is defined %}
+AUTO_PNG_TO_JPG = {{ AUTO_PNG_TO_JPG }}
+{% endif %}
 
 ## Specify the ratio between 1in and 1px for SVG images. This is only used
 ## whenrasterizing SVG images having their size units in cm or inches.
 ## Defaults to: 150
-SVG_DPI = {{ SVG_DPI | default(150) }}
+{% if SVG_DPI is defined %}
+SVG_DPI = {{ SVG_DPI }}
+{% endif %}
 
 ## Max AGE sent as a header for the image served by thumbor in seconds
 ## Defaults to: 86400
-MAX_AGE = {{ MAX_AGE | default(86400) }}
+{% if MAX_AGE is defined %}
+MAX_AGE = {{ MAX_AGE }}
+{% endif %}
 
 ## Indicates the Max AGE header in seconds for temporary images (images with
 ## failed smart detection)
 ## Defaults to: 0
-MAX_AGE_TEMP_IMAGE = {{ MAX_AGE_TEMP_IMAGE | default(0) }}
+{% if MAX_AGE_TEMP_IMAGE is defined %}
+MAX_AGE_TEMP_IMAGE = {{ MAX_AGE_TEMP_IMAGE }}
+{% endif %}
 
 ## Indicates whether thumbor should rotate images that have an Orientation EXIF
 ## header
 ## Defaults to: False
-RESPECT_ORIENTATION = {{ RESPECT_ORIENTATION | default(False) }}
+{% if RESPECT_ORIENTATION is defined %}
+RESPECT_ORIENTATION = {{ RESPECT_ORIENTATION }}
+{% endif %}
 
 ## Ignore errors during smart detections and return image as a temp image (not
 ## saved in result storage and with MAX_AGE_TEMP_IMAGE age)
 ## Defaults to: False
-IGNORE_SMART_ERRORS = {{ IGNORE_SMART_ERRORS | default(False) }}
+{% if IGNORE_SMART_ERRORS is defined %}
+IGNORE_SMART_ERRORS = {{ IGNORE_SMART_ERRORS }}
+{% endif %}
 
 ## Sends If-Modified-Since & Last-Modified headers; requires support from result
 ## storage
 ## Defaults to: False
-SEND_IF_MODIFIED_LAST_MODIFIED_HEADERS = {{ SEND_IF_MODIFIED_LAST_MODIFIED_HEADERS | default(False) }}
+{% if SEND_IF_MODIFIED_LAST_MODIFIED_HEADERS is defined %}
+SEND_IF_MODIFIED_LAST_MODIFIED_HEADERS = {{ SEND_IF_MODIFIED_LAST_MODIFIED_HEADERS }}
+{% endif %}
 
 ## Preserves exif information in generated images. Increases image size in
 ## kbytes, use with caution.
 ## Defaults to: False
-PRESERVE_EXIF_INFO = {{ PRESERVE_EXIF_INFO | default(False) }}
+{% if PRESERVE_EXIF_INFO is defined %}
+PRESERVE_EXIF_INFO = {{ PRESERVE_EXIF_INFO }}
+{% endif %}
 
 ## Indicates whether thumbor should enable the EXPERIMENTAL support for animated
 ## gifs.
 ## Defaults to: True
-ALLOW_ANIMATED_GIFS = {{ ALLOW_ANIMATED_GIFS | default(True) }}
+{% if ALLOW_ANIMATED_GIFS is defined %}
+ALLOW_ANIMATED_GIFS = {{ ALLOW_ANIMATED_GIFS }}
+{% endif %}
 
 ## Indicates whether thumbor should use gifsicle engine. Please note that smart
 ## cropping and filters are not supported for gifs using gifsicle (but won't
 ## give an error).
 ## Defaults to: False
-USE_GIFSICLE_ENGINE = {{ USE_GIFSICLE_ENGINE | default(False) }}
+{% if USE_GIFSICLE_ENGINE is defined %}
+USE_GIFSICLE_ENGINE = {{ USE_GIFSICLE_ENGINE }}
+{% endif %}
 
 ## Indicates whether thumbor should enable blacklist functionality to prevent
 ## processing certain images.
 ## Defaults to: False
-USE_BLACKLIST = {{ USE_BLACKLIST | default(False) }}
+{% if USE_BLACKLIST is defined %}
+USE_BLACKLIST = {{ USE_BLACKLIST }}
+{% endif %}
 
 ## Size of the thread pool used for image transformations.  The default value is
 ## 0 (don't use a threadpoool. Increase this if you are seeing your IOLoop
 ## getting blocked (often indicated by your upstream HTTP requests timing out)
 ## Defaults to: 0
-ENGINE_THREADPOOL_SIZE = {{ ENGINE_THREADPOOL_SIZE | default(0) }}
-
+{% if ENGINE_THREADPOOL_SIZE is defined %}
+ENGINE_THREADPOOL_SIZE = {{ ENGINE_THREADPOOL_SIZE }}
+{% endif %}
 
 
 ################################################################################
@@ -204,38 +227,52 @@ ENGINE_THREADPOOL_SIZE = {{ ENGINE_THREADPOOL_SIZE | default(0) }}
 ## The metrics backend thumbor should use to measure internal actions. This must
 ## be the full name of a python module (python must be able to import it)
 ## Defaults to: 'thumbor.metrics.logger_metrics'
-METRICS = '{{ METRICS | default('thumbor.metrics.logger_metrics') }}'
+{% if METRICS is defined %}
+METRICS = '{{ METRICS }}'
+{% endif %}
 
 ## The loader thumbor should use to load the original image. This must be the
 ## full name of a python module (python must be able to import it)
 ## Defaults to: 'thumbor.loaders.http_loader'
-LOADER = '{{ LOADER | default('thumbor.loaders.http_loader') }}'
+{% if LOADER is defined %}
+LOADER = '{{ LOADER }}'
+{% endif %}
 
 ## The file storage thumbor should use to store original images. This must be the
 ## full name of a python module (python must be able to import it)
 ## Defaults to: 'thumbor.storages.file_storage'
-STORAGE = '{{ STORAGE | default('thumbor.storages.file_storage') }}'
+{% if STORAGE is defined %}
+STORAGE = '{{ STORAGE }}'
+{% endif %}
 
 ## The result storage thumbor should use to store generated images. This must be
 ## the full name of a python module (python must be able to import it)
 ## Defaults to: None
-RESULT_STORAGE = '{{ RESULT_STORAGE | default('thumbor.result_storages.file_storage') }}'
+{% if RESULT_STORAGE is defined %}
+RESULT_STORAGE = '{{ RESULT_STORAGE }}'
+{% endif %}
 
 ## The imaging engine thumbor should use to perform image operations. This must
 ## be the full name of a python module (python must be able to import it)
 ## Possible values: 'thumbor.engines.pil', 'thumbor.engines.opencv'
 ## Defaults to: 'thumbor.engines.pil'
-ENGINE = '{{ ENGINE | default('thumbor.engines.pil') }}'
+{% if ENGINE is defined %}
+ENGINE = '{{ ENGINE }}'
+{% endif %}
 
 ## The gif engine thumbor should use to perform image operations. This must be
 ## the full name of a python module (python must be able to import it)
 ## Defaults to: 'thumbor.engines.gif'
-GIF_ENGINE = '{{ GIF_ENGINE | default('thumbor.engines.gif') }}'
+{% if GIF_ENGINE is defined %}
+GIF_ENGINE = '{{ GIF_ENGINE }}'
+{% endif %}
 
 ## The url signer thumbor should use to verify url signatures.This must be the
 ## full name of a python module (python must be able to import it)
 ## Defaults to: 'libthumbor.url_signers.base64_hmac_sha1'
-URL_SIGNER = '{{ URL_SIGNER | default('libthumbor.url_signers.base64_hmac_sha1') }}'
+{% if URL_SIGNER is defined %}
+URL_SIGNER = '{{ URL_SIGNER }}'
+{% endif %}
 
 ## Preserves Jpeg IPTC information in generated images.
 ## More info: https://github.com/thumbor/thumbor/pull/1555
@@ -260,7 +297,9 @@ ALLOW_UNSAFE_URL = {{ ALLOW_UNSAFE_URL | default(False) }}
 
 ## Enables automatically generated etags
 ## Defaults to: True
-ENABLE_ETAGS = {{ ENABLE_ETAGS | default(True) }}
+{% if ENABLE_ETAGS is defined %}
+ENABLE_ETAGS = {{ ENABLE_ETAGS }}
+{% endif %}
 
 ################################################################################
 
@@ -269,7 +308,9 @@ ENABLE_ETAGS = {{ ENABLE_ETAGS | default(True) }}
 
 ## Set maximum id length for images when stored
 ## Defaults to: 32
-MAX_ID_LENGTH = {{ MAX_ID_LENGTH | default(32) }}
+{% if MAX_ID_LENGTH is defined %}
+MAX_ID_LENGTH = {{ MAX_ID_LENGTH }}
+{% endif %}
 
 ################################################################################
 
@@ -278,7 +319,9 @@ MAX_ID_LENGTH = {{ MAX_ID_LENGTH | default(32) }}
 
 ## Set garbage collection interval in seconds
 ## Defaults to: None
-GC_INTERVAL = {{ GC_INTERVAL | default(None) }}
+{% if GC_INTERVAL is defined %}
+GC_INTERVAL = {{ GC_INTERVAL }}
+{% endif %}
 
 ################################################################################
 
@@ -302,7 +345,9 @@ STATSD_HOST = '{{ STATSD_HOST }}'
 
 ## Port to send statsd instrumentation to
 ## Defaults to: 8125
-STATSD_PORT = {{ STATSD_PORT | default(8125) }}
+{% if STATSD_PORT is defined %}
+STATSD_PORT = {{ STATSD_PORT }}
+{% endif %}
 
 ## Prefix for statsd
 ## Defaults to: None
