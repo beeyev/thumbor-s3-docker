@@ -371,77 +371,113 @@ FILE_LOADER_ROOT_PATH = '{{ FILE_LOADER_ROOT_PATH | default('/data/loader') }}'
 ## The maximum number of seconds libcurl can take to connect to an image being
 ## loaded
 ## Defaults to: 5
-HTTP_LOADER_CONNECT_TIMEOUT = {{ HTTP_LOADER_CONNECT_TIMEOUT | default(5) }}
+{% if HTTP_LOADER_CONNECT_TIMEOUT is defined %}
+HTTP_LOADER_CONNECT_TIMEOUT = {{ HTTP_LOADER_CONNECT_TIMEOUT }}
+{% endif %}
 
 ## The maximum number of seconds libcurl can take to download an image
 ## Defaults to: 20
-HTTP_LOADER_REQUEST_TIMEOUT = {{ HTTP_LOADER_REQUEST_TIMEOUT | default(20) }}
+{% if HTTP_LOADER_REQUEST_TIMEOUT is defined %}
+HTTP_LOADER_REQUEST_TIMEOUT = {{ HTTP_LOADER_REQUEST_TIMEOUT }}
+{% endif %}
 
 ## Indicates whether libcurl should follow redirects when downloading an image
 ## Defaults to: True
-HTTP_LOADER_FOLLOW_REDIRECTS = {{ HTTP_LOADER_FOLLOW_REDIRECTS | default(True) }}
+{% if HTTP_LOADER_FOLLOW_REDIRECTS is defined %}
+HTTP_LOADER_FOLLOW_REDIRECTS = {{ HTTP_LOADER_FOLLOW_REDIRECTS }}
+{% endif %}
 
 ## Indicates the number of redirects libcurl should follow when downloading an
 ## image
 ## Defaults to: 5
-HTTP_LOADER_MAX_REDIRECTS = {{ HTTP_LOADER_MAX_REDIRECTS | default(5) }}
+{% if HTTP_LOADER_MAX_REDIRECTS is defined %}
+HTTP_LOADER_MAX_REDIRECTS = {{ HTTP_LOADER_MAX_REDIRECTS }}
+{% endif %}
 
 ## The maximum number of simultaneous HTTP connections the loader can make before
 ## queuing
 ## Defaults to: 10
-HTTP_LOADER_MAX_CLIENTS = {{ HTTP_LOADER_MAX_CLIENTS | default(10) }}
+{% if HTTP_LOADER_MAX_CLIENTS is defined %}
+HTTP_LOADER_MAX_CLIENTS = {{ HTTP_LOADER_MAX_CLIENTS }}
+{% endif %}
 
 ## Indicates whether thumbor should forward the user agent of the requesting user
 ## Defaults to: False
-HTTP_LOADER_FORWARD_USER_AGENT = {{ HTTP_LOADER_FORWARD_USER_AGENT | default(False) }}
+{% if HTTP_LOADER_FORWARD_USER_AGENT is defined %}
+HTTP_LOADER_FORWARD_USER_AGENT = {{ HTTP_LOADER_FORWARD_USER_AGENT }}
+{% endif %}
 
 ## Indicates whether thumbor should forward the headers of the request
 ## Defaults to: False
-HTTP_LOADER_FORWARD_ALL_HEADERS = {{ HTTP_LOADER_FORWARD_ALL_HEADERS | default(False) }}
+{% if HTTP_LOADER_FORWARD_ALL_HEADERS is defined %}
+HTTP_LOADER_FORWARD_ALL_HEADERS = {{ HTTP_LOADER_FORWARD_ALL_HEADERS }}
+{% endif %}
 
 ## Indicates which headers should be forwarded among all the headers of the request
 ## Defaults to: []
-HTTP_LOADER_FORWARD_HEADERS_WHITELIST = {{ HTTP_LOADER_FORWARD_HEADERS_WHITELIST | default([]) }}
+{% if HTTP_LOADER_FORWARD_HEADERS_WHITELIST is defined %}
+HTTP_LOADER_FORWARD_HEADERS_WHITELIST = {{ HTTP_LOADER_FORWARD_HEADERS_WHITELIST }}
+{% endif %}
 
 ## Default user agent for thumbor http loader requests
 ## Defaults to: 'Thumbor/7.7'
-HTTP_LOADER_DEFAULT_USER_AGENT = '{{ HTTP_LOADER_DEFAULT_USER_AGENT | default('Thumbor/7.7') }}'
+{% if HTTP_LOADER_DEFAULT_USER_AGENT is defined %}
+HTTP_LOADER_DEFAULT_USER_AGENT = '{{ HTTP_LOADER_DEFAULT_USER_AGENT }}'
+{% endif %}
 
 ## The proxy host needed to load images through
 ## Defaults to: None
-HTTP_LOADER_PROXY_HOST = {{ HTTP_LOADER_PROXY_HOST | default(None) }}
+{% if HTTP_LOADER_PROXY_HOST is defined %}
+HTTP_LOADER_PROXY_HOST = '{{ HTTP_LOADER_PROXY_HOST }}'
+{% endif %}
 
 ## The proxy port for the proxy host
 ## Defaults to: None
-HTTP_LOADER_PROXY_PORT = {{ HTTP_LOADER_PROXY_PORT | default(None) }}
+{% if HTTP_LOADER_PROXY_PORT is defined %}
+HTTP_LOADER_PROXY_PORT = {{ HTTP_LOADER_PROXY_PORT }}
+{% endif %}
 
 ## The proxy username for the proxy host
 ## Defaults to: None
-HTTP_LOADER_PROXY_USERNAME = {{ HTTP_LOADER_PROXY_USERNAME | default(None) }}
+{% if HTTP_LOADER_PROXY_USERNAME is defined %}
+HTTP_LOADER_PROXY_USERNAME = '{{ HTTP_LOADER_PROXY_USERNAME }}'
+{% endif %}
 
 ## The proxy password for the proxy host
 ## Defaults to: None
-HTTP_LOADER_PROXY_PASSWORD = {{ HTTP_LOADER_PROXY_PASSWORD | default(None) }}
+{% if HTTP_LOADER_PROXY_PASSWORD is defined %}
+HTTP_LOADER_PROXY_PASSWORD = '{{ HTTP_LOADER_PROXY_PASSWORD }}'
+{% endif %}
 
 ## The filename of CA certificates in PEM format
 ## Defaults to: None
-HTTP_LOADER_CA_CERTS = {{ HTTP_LOADER_CA_CERTS | default(None) }}
+{% if HTTP_LOADER_CA_CERTS is defined %}
+HTTP_LOADER_CA_CERTS = '{{ HTTP_LOADER_CA_CERTS }}'
+{% endif %}
 
 ## Validate the server’s certificate for HTTPS requests
 ## Defaults to: None
-HTTP_LOADER_VALIDATE_CERTS = {{ HTTP_LOADER_VALIDATE_CERTS | default(None) }}
+{% if HTTP_LOADER_VALIDATE_CERTS is defined %}
+HTTP_LOADER_VALIDATE_CERTS = '{{ HTTP_LOADER_VALIDATE_CERTS }}'
+{% endif %}
 
 ## The filename for client SSL key
 ## Defaults to: None
-HTTP_LOADER_CLIENT_KEY = {{ HTTP_LOADER_CLIENT_KEY | default(None) }}
+{% if HTTP_LOADER_CLIENT_KEY is defined %}
+HTTP_LOADER_CLIENT_KEY = '{{ HTTP_LOADER_CLIENT_KEY }}'
+{% endif %}
 
 ## The filename for client SSL certificate
 ## Defaults to: None
-HTTP_LOADER_CLIENT_CERT = {{ HTTP_LOADER_CLIENT_CERT | default(None) }}
+{% if HTTP_LOADER_CLIENT_CERT is defined %}
+HTTP_LOADER_CLIENT_CERT = '{{ HTTP_LOADER_CLIENT_CERT }}'
+{% endif %}
 
 ## If the CurlAsyncHTTPClient should be used
 ## Defaults to: False
-HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT = {{ HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT | default(False) }}
+{% if HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT is defined %}
+HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT = {{ HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT }}
+{% endif %}
 
 ################################################################################
 
@@ -453,19 +489,25 @@ HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT = {{ HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT | def
 ## timeout if the speed is below HTTP_LOADER_CURL_LOW_SPEED_LIMIT for that
 ## long
 ## Defaults to: 0
-HTTP_LOADER_CURL_LOW_SPEED_TIME = {{ HTTP_LOADER_CURL_LOW_SPEED_TIME | default(0) }}
+{% if HTTP_LOADER_CURL_LOW_SPEED_TIME is defined %}
+HTTP_LOADER_CURL_LOW_SPEED_TIME = {{ HTTP_LOADER_CURL_LOW_SPEED_TIME }}
+{% endif %}
 
 ## If HTTP_LOADER_CURL_LOW_SPEED_TIME and HTTP_LOADER_CURL_ASYNC_HTTP_CLIENT are
 ## set, then this is the limit in bytes per second as integer which should
 ## timeout if the speed is below that limit for
 ## HTTP_LOADER_CURL_LOW_SPEED_TIME seconds
 ## Defaults to: 0
-HTTP_LOADER_CURL_LOW_SPEED_LIMIT = {{ HTTP_LOADER_CURL_LOW_SPEED_LIMIT | default(0) }}
+{% if HTTP_LOADER_CURL_LOW_SPEED_LIMIT is defined %}
+HTTP_LOADER_CURL_LOW_SPEED_LIMIT = {{ HTTP_LOADER_CURL_LOW_SPEED_LIMIT }}
+{% endif %}
 
 ## Custom app class to override ThumborServiceApp. This config value is
 ## overridden by the -a command-line parameter.
 ## Defaults to: 'thumbor.app.ThumborServiceApp'
-APP_CLASS = '{{ APP_CLASS | default('thumbor.app.ThumborServiceApp') }}'
+{% if APP_CLASS is defined %}
+APP_CLASS = '{{ APP_CLASS }}'
+{% endif %}
 
 ################################################################################
 
@@ -475,13 +517,17 @@ APP_CLASS = '{{ APP_CLASS | default('thumbor.app.ThumborServiceApp') }}'
 ## Expiration in seconds for the images in the File Storage. Defaults to one
 ## month
 ## Defaults to: 2592000
-STORAGE_EXPIRATION_SECONDS = {{ STORAGE_EXPIRATION_SECONDS | default(2592000) }}
+{% if STORAGE_EXPIRATION_SECONDS is defined %}
+STORAGE_EXPIRATION_SECONDS = {{ STORAGE_EXPIRATION_SECONDS }}
+{% endif %}
 
 ## Indicates whether thumbor should store the signing key for each image in the
 ## file storage. This allows the key to be changed and old images to still be
 ## properly found
 ## Defaults to: False
-STORES_CRYPTO_KEY_FOR_EACH_IMAGE = {{ STORES_CRYPTO_KEY_FOR_EACH_IMAGE | default(False) }}
+{% if STORES_CRYPTO_KEY_FOR_EACH_IMAGE is defined %}
+STORES_CRYPTO_KEY_FOR_EACH_IMAGE = {{ STORES_CRYPTO_KEY_FOR_EACH_IMAGE }}
+{% endif %}
 
 ## The root path where the File Storage will try to find images
 ## Defaults to: '/tmp/thumbor/storage'
