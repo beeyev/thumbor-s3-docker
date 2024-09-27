@@ -2,7 +2,7 @@
 
 services:
   thumbor:
-    image: ghcr.io/beeyev/thumbor-s3:slim-alpine-test
+    image: beeyev/thumbor-s3:debian
     restart: unless-stopped
     tty: true
     ports:

@@ -48,8 +48,7 @@ RUN set -eux \
         # remotecv is required for queued OpenCV processing
         "remotecv==5.*,>=5.1.8"  \
         # thumbor
-        thumbor[all]==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
-        && thumbor --version && envtpl --help
+        thumbor[all]==7.7.* thumbor-aws==0.8.* tc_prometheus==2.*
 
 ARG TZ='UTC'
 ENV TZ=$TZ
@@ -74,7 +73,14 @@ RUN set -eux \
     && mkdir /data/ \
     && mkdir /docker-entrypoint.init.d/ \
     # Running `thumbor-doctor` to smoke test functionality
-    && thumbor-doctor
+    && thumbor-doctor \
+    && thumbor --version \
+    && envtpl --help \
+    && jpegtran -version \
+    && ffmpeg -version \
+    && gifsicle --version
+
+
 
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 CMD ["thumbor"]

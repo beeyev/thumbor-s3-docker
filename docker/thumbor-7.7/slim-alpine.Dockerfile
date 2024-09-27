@@ -45,7 +45,6 @@ RUN set -eux \
         "numpy==1.*,>=1.26.3" \
         # pycurl is required for thumbor
         "pycurl==7.*,>=7.45.2" thumbor==7.7.* thumbor-aws==0.8.* tc_prometheus==2.* \
-    && thumbor --version && envtpl --help \
     ##
     ## Optional extensions
     ##
@@ -76,7 +75,10 @@ RUN set -eux \
     # /data/ dir is used by thumbor
     && mkdir /data/ \
     && mkdir /docker-entrypoint.init.d/ \
-    && thumbor --version
+    && thumbor --version \
+    && envtpl --help \
+    && jpegtran -version \
+    && gifsicle --version
 
 # Enable nobody user
 #RUN set -eux \
