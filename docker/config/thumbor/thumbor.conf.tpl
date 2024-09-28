@@ -918,9 +918,7 @@ AWS_LOADER_S3_ENDPOINT_URL = '{{ AWS_LOADER_S3_ENDPOINT_URL }}'
 
 ## Loader prefix path.
 ## Defaults to: '/st'
-{% if AWS_LOADER_ROOT_PATH is defined %}
-AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH }}'
-{% endif %}
+AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH | default('') }}'
 
 ################################################################################
 
@@ -960,9 +958,7 @@ AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL }}'
 
 ## Storage prefix path.
 ## Defaults to: ''
-{% if AWS_STORAGE_ROOT_PATH is defined %}
-AWS_STORAGE_ROOT_PATH = '{{ AWS_STORAGE_ROOT_PATH }}'
-{% endif %}
+AWS_STORAGE_ROOT_PATH = '{{ AWS_STORAGE_ROOT_PATH | default('') }}'
 
 ## Storage ACL for files written in bucket
 ## Defaults to: 'public-read'
@@ -1015,9 +1011,7 @@ AWS_RESULT_STORAGE_S3_ENDPOINT_URL = '{{ AWS_RESULT_STORAGE_S3_ENDPOINT_URL }}'
 
 ## Result Storage prefix path.
 ## Defaults to: '/rs'
-{% if AWS_RESULT_STORAGE_ROOT_PATH is defined %}
-AWS_RESULT_STORAGE_ROOT_PATH = '{{ AWS_RESULT_STORAGE_ROOT_PATH }}'
-{% endif %}
+AWS_RESULT_STORAGE_ROOT_PATH = '{{ AWS_RESULT_STORAGE_ROOT_PATH | default('/rs') }}'
 
 ## ACL to use for storing items in S3.
 ## Defaults to: None
