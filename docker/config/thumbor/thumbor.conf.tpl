@@ -67,15 +67,15 @@ ALLOWED_SOURCES = {{ ALLOWED_SOURCES }}
 QUALITY = {{ QUALITY }}
 {% endif %}
 
-## Exports JPEG images with the progressive flag set.
+## Exports JPEG images with the `progressive` flag set.
 ## Defaults to: True
 {% if PROGRESSIVE_JPEG is defined %}
 PROGRESSIVE_JPEG = {{ PROGRESSIVE_JPEG }}
 {% endif %}
 
 ## Specify subsampling behavior for Pillow (see `subsampling`               in
-## http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html#jpeg).
-## Be careful to use int for 0,1,2 and string for "4:4:4"
+## http://pillow.readthedocs.org/en/latest/handbook/image-file-
+## formats.html#jpeg).Be careful to use int for 0,1,2 and string for "4:4:4"
 ## notation. Will ignore `quality`. Using `keep` will copy the original file's
 ## subsampling.
 ## Defaults to: None
@@ -94,7 +94,7 @@ PILLOW_JPEG_QTABLES = '{{ PILLOW_JPEG_QTABLES }}'
 {% endif %}
 
 
-## Specify resampling filter for Pillow resize method.One of LANCZOS, NEAREST,
+## Specify resampling filter for Pillow resize method. One of LANCZOS, NEAREST,
 ## BILINEAR, BICUBIC, HAMMING (Pillow>=3.4.0).
 ## Defaults to: 'LANCZOS'
 {% if PILLOW_RESAMPLING_FILTER is defined %}
@@ -106,6 +106,52 @@ PILLOW_RESAMPLING_FILTER = '{{ PILLOW_RESAMPLING_FILTER }}'
 ## Defaults to: None
 {% if WEBP_QUALITY is defined %}
 WEBP_QUALITY = {{ WEBP_QUALITY }}
+{% endif %}
+
+## Quality index used for generated AVIF images. If not set (None) the same level
+## of JPEG quality will be used. Controls the max quantizer setting, with
+## quality=0 corresponding to max quantizer 63, and quality=100 to max
+## quantizer=0
+## Defaults to: None
+{% if AVIF_QUALITY is defined %}
+AVIF_QUALITY = {{ AVIF_QUALITY }}
+{% endif %}
+
+## Quality/speed trade-off (0=slower-better, 10=fastest).
+## Defaults to: None
+{% if AVIF_SPEED is defined %}
+AVIF_SPEED = {{ AVIF_SPEED }}
+{% endif %}
+
+## Codec to use for encoding AVIF images. Can be `auto`, `aom`, `rav1e`, or
+## `svt`, depending on what is compiled into libavif.
+## Defaults to: 'auto'
+{% if AVIF_CODEC is defined %}
+AVIF_CODEC = '{{ AVIF_CODEC }}'
+{% endif %}
+
+## Codec to use for encoding AVIF images if `AVIF_CODEC` cannot be used. For
+## instance, if AVIF_CODEC is `svt` but an image is too small or too large to
+## be encoded with that codec, the image will be encoded using the codec from
+## this setting instead.
+## Defaults to: 'auto'
+{% if AVIF_CODEC_FALLBACK is defined %}
+AVIF_CODEC_FALLBACK = '{{ AVIF_CODEC_FALLBACK }}'
+{% endif %}
+
+## Quality index used for generated HEIF images. If not set (None) the same level
+## of JPEG quality will be used.
+## Defaults to: None
+{% if HEIF_QUALITY is defined %}
+HEIF_QUALITY = {{ HEIF_QUALITY }}
+{% endif %}
+
+## Path to the file containing the sRGB ICC profile to use when images need to be
+## converted from other color spaces. If None, uses the default SRGB profile
+## from Pillow ImageCMS.
+## Defaults to: None
+{% if SRGB_PROFILE is defined %}
+SRGB_PROFILE = {{ SRGB_PROFILE }}
 {% endif %}
 
 ## Compression level for generated PNG images.
@@ -128,6 +174,34 @@ PILLOW_PRESERVE_INDEXED_MODE = {{ PILLOW_PRESERVE_INDEXED_MODE }}
 AUTO_WEBP = {{ AUTO_WEBP }}
 {% endif %}
 
+## Specifies whether Avif format should be used automatically if the request
+## accepts it (via Accept header) and pillow-avif-plugin is enabled
+## Defaults to: False
+{% if AUTO_AVIF is defined %}
+AUTO_AVIF = {{ AUTO_AVIF }}
+{% endif %}
+
+## Specifies whether JPG format should be used automatically if the request
+## accepts it (via Accept header)
+## Defaults to: False
+{% if AUTO_JPG is defined %}
+AUTO_JPG = {{ AUTO_JPG }}
+{% endif %}
+
+## Specifies whether Heif format should be used automatically if the request
+## accepts it (via Accept header) and pillow-heif is enabled
+## Defaults to: False
+{% if AUTO_HEIF is defined %}
+AUTO_HEIF = {{ AUTO_HEIF }}
+{% endif %}
+
+## Specifies whether PNG format should be used automatically if the request
+## accepts it (via Accept header)
+## Defaults to: False
+{% if AUTO_PNG is defined %}
+AUTO_PNG = {{ AUTO_PNG }}
+{% endif %}
+
 ## Specifies whether a PNG image should be used automatically if the png image
 ## has no transparency (via alpha layer). WARNING: Depending on case, this is
 ## not a good deal. This transformation maybe causes distortions or the size
@@ -140,8 +214,8 @@ AUTO_WEBP = {{ AUTO_WEBP }}
 AUTO_PNG_TO_JPG = {{ AUTO_PNG_TO_JPG }}
 {% endif %}
 
-## Specify the ratio between 1in and 1px for SVG images. This is only used
-## whenrasterizing SVG images having their size units in cm or inches.
+## Specify the ratio between 1in and 1px for SVG images. This is only used when
+## rasterizing SVG images having their size units in cm or inches.
 ## Defaults to: 150
 {% if SVG_DPI is defined %}
 SVG_DPI = {{ SVG_DPI }}
@@ -188,6 +262,18 @@ SEND_IF_MODIFIED_LAST_MODIFIED_HEADERS = {{ SEND_IF_MODIFIED_LAST_MODIFIED_HEADE
 PRESERVE_EXIF_INFO = {{ PRESERVE_EXIF_INFO }}
 {% endif %}
 
+## Preserves Exif copyright information in generated images.
+## Defaults to: False
+{% if PRESERVE_EXIF_COPYRIGHT_INFO is defined %}
+PRESERVE_EXIF_COPYRIGHT_INFO = {{ PRESERVE_EXIF_COPYRIGHT_INFO }}
+{% endif %}
+
+## Preserves Jpeg IPTC information in generated images.
+## Defaults to: False
+{% if PRESERVE_IPTC_INFO is defined %}
+PRESERVE_IPTC_INFO = {{ PRESERVE_IPTC_INFO }}
+{% endif %}
+
 ## Indicates whether thumbor should enable the EXPERIMENTAL support for animated
 ## gifs.
 ## Defaults to: True
@@ -210,8 +296,8 @@ USE_GIFSICLE_ENGINE = {{ USE_GIFSICLE_ENGINE }}
 USE_BLACKLIST = {{ USE_BLACKLIST }}
 {% endif %}
 
-## Size of the thread pool used for image transformations.  The default value is
-## 0 (don't use a threadpoool. Increase this if you are seeing your IOLoop
+## Size of the thread pool used for image transformations. The default value is 0
+## (don't use a threadpoool). Increase this if you are seeing your IOLoop
 ## getting blocked (often indicated by your upstream HTTP requests timing out)
 ## Defaults to: 0
 {% if ENGINE_THREADPOOL_SIZE is defined %}
@@ -254,7 +340,6 @@ RESULT_STORAGE = '{{ RESULT_STORAGE }}'
 
 ## The imaging engine thumbor should use to perform image operations. This must
 ## be the full name of a python module (python must be able to import it)
-## Possible values: 'thumbor.engines.pil', 'thumbor.engines.opencv'
 ## Defaults to: 'thumbor.engines.pil'
 {% if ENGINE is defined %}
 ENGINE = '{{ ENGINE }}'
@@ -274,10 +359,6 @@ GIF_ENGINE = '{{ GIF_ENGINE }}'
 URL_SIGNER = '{{ URL_SIGNER }}'
 {% endif %}
 
-## Preserves Jpeg IPTC information in generated images.
-## More info: https://github.com/thumbor/thumbor/pull/1555
-PRESERVE_IPTC_INFO = {{ PRESERVE_IPTC_INFO | default(False) }}
-
 ################################################################################
 
 
@@ -292,6 +373,7 @@ SECURITY_KEY = '{{ SECURITY_KEY | default('31337') }}'
 ALLOW_UNSAFE_URL = {{ ALLOW_UNSAFE_URL | default(False) }}
 
 ################################################################################
+
 
 ##################################### HTTP #####################################
 
@@ -357,10 +439,10 @@ STATSD_PREFIX = '{{ STATSD_PREFIX }}'
 
 ################################################################################
 
+
 ################################# File Loader ##################################
 
 ## The root path where the File Loader will try to find images
-## Defaults to: /tmp
 FILE_LOADER_ROOT_PATH = '{{ FILE_LOADER_ROOT_PATH | default('/data/loader') }}'
 
 ################################################################################
@@ -502,11 +584,25 @@ HTTP_LOADER_CURL_LOW_SPEED_TIME = {{ HTTP_LOADER_CURL_LOW_SPEED_TIME }}
 HTTP_LOADER_CURL_LOW_SPEED_LIMIT = {{ HTTP_LOADER_CURL_LOW_SPEED_LIMIT }}
 {% endif %}
 
+## If True, thumbor will ensure that the socket from the file descriptor number
+## passed using the --fd flag is non-blocking. This setting has no effect if
+## the --fd flag is a path, sockets created that way are always non-blocking.
+## Defaults to: False
+{% if NON_BLOCKING_SOCKETS is defined %}
+NON_BLOCKING_SOCKETS = {{ NON_BLOCKING_SOCKETS }}
+{% endif %}
+
 ## Custom app class to override ThumborServiceApp. This config value is
 ## overridden by the -a command-line parameter.
 ## Defaults to: 'thumbor.app.ThumborServiceApp'
 {% if APP_CLASS is defined %}
 APP_CLASS = '{{ APP_CLASS }}'
+{% endif %}
+
+## Sends Access-Control-Allow-Origin header
+## Defaults to: False
+{% if ACCESS_CONTROL_ALLOW_ORIGIN_HEADER is defined %}
+ACCESS_CONTROL_ALLOW_ORIGIN_HEADER = {{ ACCESS_CONTROL_ALLOW_ORIGIN_HEADER }}
 {% endif %}
 
 ################################################################################
@@ -661,7 +757,8 @@ PROFILE_DETECTOR_CASCADE_FILE = '{{ PROFILE_DETECTOR_CASCADE_FILE }}'
 ################################## Optimizers ##################################
 
 ## List of optimizers that thumbor will use to optimize images
-## Defaults to: [] --> ['thumbor.optimizers.jpegtran',]
+## Defaults to: [
+#]
 {% if OPTIMIZERS is defined %}
 OPTIMIZERS = {{ OPTIMIZERS }}
 {% endif %}
@@ -774,6 +871,48 @@ REDIS_QUEUE_SERVER_DB = {{ REDIS_QUEUE_SERVER_DB }}
 REDIS_QUEUE_SERVER_PASSWORD = '{{ REDIS_QUEUE_SERVER_PASSWORD }}'
 {% endif %}
 
+## Redis operation mode 'single_node' or 'sentinel'
+## Defaults to: 'single_node'
+{% if REDIS_QUEUE_MODE is defined %}
+REDIS_QUEUE_MODE = '{{ REDIS_QUEUE_MODE }}'
+{% endif %}
+
+## Sentinel server instances for the queued redis detector
+## Defaults to: 'localhost:26379'
+{% if REDIS_QUEUE_SENTINEL_INSTANCES is defined %}
+REDIS_QUEUE_SENTINEL_INSTANCES = '{{ REDIS_QUEUE_SENTINEL_INSTANCES }}'
+{% endif %}
+
+## Sentinel server password for the queued redis detector
+## Defaults to: None
+{% if REDIS_QUEUE_SENTINEL_PASSWORD is defined %}
+REDIS_QUEUE_SENTINEL_PASSWORD = '{{ REDIS_QUEUE_SENTINEL_PASSWORD }}'
+{% endif %}
+
+## Sentinel server master instance for the queued redis detector
+## Defaults to: 'master'
+{% if REDIS_QUEUE_SENTINEL_MASTER_INSTANCE is defined %}
+REDIS_QUEUE_SENTINEL_MASTER_INSTANCE = '{{ REDIS_QUEUE_SENTINEL_MASTER_INSTANCE }}'
+{% endif %}
+
+## Sentinel server master password for the queued redis detector
+## Defaults to: None
+{% if REDIS_QUEUE_SENTINEL_MASTER_PASSWORD is defined %}
+REDIS_QUEUE_SENTINEL_MASTER_PASSWORD = '{{ REDIS_QUEUE_SENTINEL_MASTER_PASSWORD }}'
+{% endif %}
+
+## Sentinel server master database index for the queued redis detector
+## Defaults to: 0
+{% if REDIS_QUEUE_SENTINEL_MASTER_DB is defined %}
+REDIS_QUEUE_SENTINEL_MASTER_DB = {{ REDIS_QUEUE_SENTINEL_MASTER_DB }}
+{% endif %}
+
+## Sentinel server socket timeout for the queued redis detector
+## Defaults to: 10.0
+{% if REDIS_QUEUE_SENTINEL_SOCKET_TIMEOUT is defined %}
+REDIS_QUEUE_SENTINEL_SOCKET_TIMEOUT = {{ REDIS_QUEUE_SENTINEL_SOCKET_TIMEOUT }}
+{% endif %}
+
 ################################################################################
 
 
@@ -858,7 +997,7 @@ SENTRY_ENVIRONMENT = '{{ SENTRY_ENVIRONMENT }}'
 MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN = {{ MAX_WAIT_SECONDS_BEFORE_SERVER_SHUTDOWN }}
 {% endif %}
 
-## The amount of time to waut before shutting down all io, after the server has
+## The amount of time to wait before shutting down all io, after the server has
 ## been stopped
 ## Defaults to: 0
 {% if MAX_WAIT_SECONDS_BEFORE_IO_SHUTDOWN is defined %}
