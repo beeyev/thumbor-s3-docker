@@ -2,13 +2,12 @@
 
 services:
   thumbor:
-    image: ghcr.io/beeyev/thumbor-s3:debian-test
+    image: ghcr.io/beeyev/thumbor-s3:7-debian
     restart: unless-stopped
     tty: true
     ports:
       - '8888:8888'
     environment:
-      ## Set the log level to `debug` in case you need to troubleshoot
       - 'LOG_LEVEL=debug'
 
       - 'LOADER=thumbor_aws.loader'
