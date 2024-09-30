@@ -928,32 +928,34 @@ AWS_LOADER_ROOT_PATH = '{{ AWS_LOADER_ROOT_PATH | default('') }}'
 
 ## Region where thumbor's objects are going to be stored.
 ## Defaults to: 'us-east-1'
-{% if AWS_STORAGE_REGION_NAME is defined %}
-AWS_STORAGE_REGION_NAME = '{{ AWS_STORAGE_REGION_NAME }}'
-{% endif %}
+AWS_STORAGE_REGION_NAME = '{{ AWS_STORAGE_REGION_NAME | default('us-east-1') }}'
 
 ## S3 Bucket where thumbor's objects are going to be stored.
 ## Defaults to: 'thumbor'
-{% if AWS_STORAGE_BUCKET_NAME is defined %}
-AWS_STORAGE_BUCKET_NAME = '{{ AWS_STORAGE_BUCKET_NAME }}'
-{% endif %}
+AWS_STORAGE_BUCKET_NAME = '{{ AWS_STORAGE_BUCKET_NAME | default('thumbor') }}'
 
 ## Secret access key for S3 to allow thumbor to store objects there.
 ## Defaults to: None
 {% if AWS_STORAGE_S3_SECRET_ACCESS_KEY is defined %}
 AWS_STORAGE_S3_SECRET_ACCESS_KEY = '{{ AWS_STORAGE_S3_SECRET_ACCESS_KEY }}'
+{% else %}
+AWS_STORAGE_S3_SECRET_ACCESS_KEY = None
 {% endif %}
 
 ## Access key ID for S3 to allow thumbor to store objects there.
 ## Defaults to: None
 {% if AWS_STORAGE_S3_ACCESS_KEY_ID is defined %}
 AWS_STORAGE_S3_ACCESS_KEY_ID = '{{ AWS_STORAGE_S3_ACCESS_KEY_ID }}'
+{% else %}
+AWS_STORAGE_S3_ACCESS_KEY_ID = None
 {% endif %}
 
 ## Endpoint URL for S3 API. Very useful for testing.
 ## Defaults to: None
 {% if AWS_STORAGE_S3_ENDPOINT_URL is defined %}
 AWS_STORAGE_S3_ENDPOINT_URL = '{{ AWS_STORAGE_S3_ENDPOINT_URL }}'
+{% else %}
+AWS_STORAGE_S3_ENDPOINT_URL = None
 {% endif %}
 
 ## Storage prefix path.
