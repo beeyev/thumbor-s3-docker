@@ -58,7 +58,7 @@ services:
   # All Routing is done by proxy server (nginx, traefik), just tell minio where to redirect to.
   # - MINIO_BROWSER_REDIRECT_URL=http://stash.localhost
   minio:
-    image: bitnami/minio:latest
+    image: minio/minio:latest
     container_name: 'minio'
     restart: unless-stopped
     tty: true
