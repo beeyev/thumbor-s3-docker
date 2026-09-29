@@ -49,7 +49,7 @@ services:
 
   # Using minio as an example of AWS usage
   minio:
-    image: bitnami/minio:latest
+    image: soldevelo/minio:latest
     container_name: 'minio'
     restart: unless-stopped
     tty: true
